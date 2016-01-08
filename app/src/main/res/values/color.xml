@@ -1,0 +1,11 @@
+<resources>
+    <!-- 绿色 -->
+    <color name="green_one">#3AAD72</color>
+    <color name="green_two">#56B59A</color>
+
+    <!-- 灰色-->
+    <color name="gray_color_one">#666666</color>
+    <color name="gray_color_two">#f6f6f6</color>
+    <color name="gray_color_three">#d9d9d9</color>
+    <color name="gray_color_four">#FCFCFC</color>
+</resources>

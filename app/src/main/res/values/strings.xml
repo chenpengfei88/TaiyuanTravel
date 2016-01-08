@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">太原公交</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>\
+
+    <!-- 首页-->
+    <string name="tab_main_main">首页</string>
+    <string name="tab_main_station">站点</string>
+    <string name="tab_main_route">线路</string>
+    <string name="edit_main_start_address_hint">输入起点</string>
+    <string name="edit_main_end_address_hint">输入终点</string>
+    <string name="button_main_search">查询</string>
+    <string name="title_staion_programme">线路方案</string>
+    <string name="toast_no_result">抱歉，未能找到结果</string>
+    <string name="search_city">太原</string>
+    <string name="title_station_programme">线路%s</string>
+
+</resources>

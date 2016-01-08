@@ -1,0 +1,67 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="@dimen/layout_margin_one">
+
+        <ImageView
+            android:id="@+id/image_main_exchange"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/tab_route_gray"
+            android:layout_gravity="center_vertical"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/style_layout_main_start_end_address_bg"
+            android:layout_marginLeft="@dimen/layout_margin_two">
+
+            <EditText
+                android:id="@+id/edit_main_start_address"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/layout_height_one"
+                android:layout_toRightOf="@id/image_main_exchange"
+                android:layout_marginLeft="@dimen/layout_margin_two"
+                android:background="@android:color/transparent"
+                android:textColor="@color/gray_color_three"
+                android:hint="@string/edit_main_start_address_hint"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/gray_color_three"/>
+
+            <EditText
+                android:id="@+id/edit_main_end_address"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/layout_height_one"
+                android:layout_marginLeft="@dimen/layout_margin_two"
+                android:textColor="@color/gray_color_three"
+                android:background="@android:color/transparent"
+                android:hint="@string/edit_main_end_address_hint"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/button_main_search"
+        android:layout_width="@dimen/layout_width_one"
+        android:layout_height="wrap_content"
+        android:text="@string/button_main_search"
+        android:paddingTop="@dimen/layout_padding_one"
+        android:paddingBottom="@dimen/layout_padding_one"
+        android:background="@drawable/style_button_main_search_bg"
+        android:layout_gravity="right"
+        android:layout_marginRight="@dimen/layout_margin_one"
+        android:onClick="btnClick"
+        android:textSize="@dimen/text_typeface_size_two"/>
+
+</LinearLayout>

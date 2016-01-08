@@ -1,0 +1,47 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager_main_content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+    <View
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/gray_color_three"/>
+
+    <!-- 底部导航栏 -->
+    <RadioGroup
+        android:id="@+id/radiogroup_main_navigationbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/radiobutton_main_main"
+            style="@style/radio_navigationbar_main_style"
+            android:clickable="true"
+            android:onClick="btnClick"
+            android:checked="true"/>
+
+        <RadioButton
+            android:id="@+id/radiobutton_main_station"
+            android:clickable="true"
+            android:onClick="btnClick"
+            style="@style/radio_navigationbar_station_style"/>
+
+        <RadioButton
+            android:id="@+id/radiobutton_main_route"
+            android:clickable="true"
+            android:onClick="btnClick"
+            style="@style/radio_navigationbar_route_style"/>
+    </RadioGroup>
+    <!-- 底部导航栏 -->
+
+</LinearLayout>

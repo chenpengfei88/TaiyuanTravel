@@ -1,0 +1,22 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <!-- 字体大小-->
+    <dimen name="text_typeface_size_one">14sp</dimen>
+    <dimen name="text_typeface_size_three">16sp</dimen>
+    <dimen name="text_typeface_size_two">18sp</dimen>
+
+    <!-- 间距-->
+    <dimen name="radio_padding_top">10dp</dimen>
+    <dimen name="layout_margin_one">30dp</dimen>
+    <dimen name="layout_margin_two">15dp</dimen>
+    <dimen name="button_margin_one">30dp</dimen>
+    <dimen name="layout_padding_one">15dp</dimen>
+    <dimen name="radio_padding_drawable">3dp</dimen>
+
+    <!-- 宽高-->
+    <dimen name="layout_width_one">265dp</dimen>
+    <dimen name="layout_height_one">50dp</dimen>
+</resources>
