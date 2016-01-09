@@ -12,11 +12,15 @@
     <dimen name="radio_padding_top">10dp</dimen>
     <dimen name="layout_margin_one">30dp</dimen>
     <dimen name="layout_margin_two">15dp</dimen>
+    <dimen name="layout_margin_four">20dp</dimen>
+    <dimen name="layout_margin_three">10dp</dimen>
     <dimen name="button_margin_one">30dp</dimen>
     <dimen name="layout_padding_one">15dp</dimen>
+    <dimen name="layout_padding_two">10dp</dimen>
+    <dimen name="layout_padding_three">7dp</dimen>
     <dimen name="radio_padding_drawable">3dp</dimen>
 
     <!-- 宽高-->
-    <dimen name="layout_width_one">265dp</dimen>
-    <dimen name="layout_height_one">50dp</dimen>
+    <dimen name="layout_width_one">40dp</dimen>
+    <dimen name="layout_height_one">55dp</dimen>
 </resources>

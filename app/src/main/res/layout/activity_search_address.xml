@@ -1,0 +1,49 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/icon_actionbar_search"
+        android:layout_gravity="center_vertical"/>
+
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/layout_margin_three">
+
+        <ImageView
+            android:id="@+id/image_main_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_delete"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/layout_margin_three"/>
+
+        <EditText
+            android:id="@+id/edit_main_search"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/layout_width_one"
+            android:background="@android:color/transparent"
+            android:layout_toLeftOf="@id/image_main_delete"
+            android:paddingLeft="@dimen/layout_padding_two"
+            android:textColorHint="@android:color/white"
+            android:singleLine="true"
+            android:hint="@string/edit_main_address_search"/>
+
+        <View
+            android:id="@+id/view_main_line"
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/gray_color_three"
+            android:layout_toLeftOf="@id/image_main_delete"
+            android:layout_below="@id/edit_main_search"
+            android:layout_marginRight="@dimen/layout_margin_three"/>
+
+    </RelativeLayout>
+
+</LinearLayout>

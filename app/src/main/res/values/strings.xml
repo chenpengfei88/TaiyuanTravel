@@ -13,7 +13,8 @@
     <string name="button_main_search">查询</string>
     <string name="title_staion_programme">线路方案</string>
     <string name="toast_no_result">抱歉，未能找到结果</string>
-    <string name="search_city">太原</string>
+    <string name="search_city">太原市</string>
     <string name="title_station_programme">线路%s</string>
+    <string name="edit_main_address_search">输入关键词</string>
 
 </resources>

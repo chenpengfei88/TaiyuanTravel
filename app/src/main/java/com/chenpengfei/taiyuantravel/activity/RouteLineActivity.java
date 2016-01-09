@@ -1,10 +1,9 @@
 package com.chenpengfei.taiyuantravel.activity;
 
-import android.app.ExpandableListActivity;
 import android.os.Bundle;
 import android.widget.ExpandableListView;
 import android.widget.Toast;
-import com.baidu.mapapi.SDKInitializer;
+
 import com.baidu.mapapi.model.LatLng;
 import com.baidu.mapapi.search.core.SearchResult;
 import com.baidu.mapapi.search.geocode.GeoCodeOption;
@@ -20,7 +19,7 @@ import com.baidu.mapapi.search.route.TransitRouteLine;
 import com.baidu.mapapi.search.route.TransitRoutePlanOption;
 import com.baidu.mapapi.search.route.TransitRouteResult;
 import com.baidu.mapapi.search.route.WalkingRouteResult;
-import com.chenpengfei.taiyuantravel.Pojo.StationProgramme;
+import com.chenpengfei.taiyuantravel.pojo.StationProgramme;
 import com.chenpengfei.taiyuantravel.R;
 import com.chenpengfei.taiyuantravel.adapter.StationProgrammeExpandableAdapter;
 import com.chenpengfei.taiyuantravel.customview.CustomToast;
@@ -45,7 +44,6 @@ public class RouteLineActivity extends BaseActivity implements OnGetGeoCoderResu
 
     @Override
     protected void onCreateActivity(Bundle savedInstanceState) {
-        SDKInitializer.initialize(getApplicationContext());
         setContentView(R.layout.activity_route_line);
         setActionBarTitle(getStringContent(R.string.title_staion_programme), true);
         initView();

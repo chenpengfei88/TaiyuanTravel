@@ -1,4 +1,4 @@
-package com.chenpengfei.taiyuantravel.Pojo;
+package com.chenpengfei.taiyuantravel.pojo;
 
 import java.util.ArrayList;
 

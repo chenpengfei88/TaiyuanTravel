@@ -35,6 +35,12 @@
             android:screenOrientation="portrait">
         </activity>
 
+        <!-- 线路 -->
+        <activity
+            android:name=".activity.PoiAddressActivity"
+            android:screenOrientation="portrait">
+        </activity>
+
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"

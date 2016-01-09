@@ -5,15 +5,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
-import com.chenpengfei.taiyuantravel.Pojo.StationProgramme;
+import com.chenpengfei.taiyuantravel.pojo.StationProgramme;
 import com.chenpengfei.taiyuantravel.R;
 import java.util.ArrayList;
 
 /**
- *  @copyright  ³ÂÅô·É
+ *  @copyright  é™ˆé¹é£
  *  @author pengfei.chen
  *  @email 450032215@qq.com
- *  @description  ÏÔÊ¾ÏßÂ··½°¸listviewµÄÊÊÅäÆ÷
+ *  @description  æ˜¾ç¤ºçº¿è·¯æ–¹æ¡ˆlistviewçš„é€‚é…å™¨
  */
 public class StationProgrammeExpandableAdapter extends BaseExpandableListAdapter {
 

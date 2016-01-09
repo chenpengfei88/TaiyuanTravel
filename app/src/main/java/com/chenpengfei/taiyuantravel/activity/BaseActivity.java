@@ -7,6 +7,10 @@ import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.style.AbsoluteSizeSpan;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
+
+import com.baidu.mapapi.SDKInitializer;
 
 /**
  *  @copyright  陈鹏飞
@@ -16,9 +20,13 @@ import android.view.MenuItem;
  */
 public class BaseActivity extends FragmentActivity {
 
+    private ActionBar actionBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        actionBar = getActionBar();
+        SDKInitializer.initialize(getApplicationContext());
         onCreateActivity(savedInstanceState);
     }
 
@@ -28,12 +36,21 @@ public class BaseActivity extends FragmentActivity {
      * @description 设置title的字体内容和字体大小
      */
     public void setActionBarTitle(String actionBarTitle, boolean isDiaplayHomeAsUp) {
-        ActionBar actionBar = getActionBar();
         if(actionBar == null) return;
         SpannableStringBuilder titleContent = new SpannableStringBuilder(actionBarTitle);
         titleContent.setSpan(new AbsoluteSizeSpan(55), 0, actionBarTitle.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE); //设置字体大小
         actionBar.setTitle(titleContent);
         actionBar.setDisplayHomeAsUpEnabled(isDiaplayHomeAsUp);
+    }
+
+    /**
+     * @param view
+     * @description actionbar添加自定义view
+     */
+    public void addCustomView(View view) {
+        actionBar.setTitle("");
+        actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        actionBar.setCustomView(view);
     }
 
     /**

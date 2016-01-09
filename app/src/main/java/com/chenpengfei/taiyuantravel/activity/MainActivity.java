@@ -7,11 +7,15 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.RadioButton;
+
+import com.baidu.mapapi.search.sug.SuggestionResult;
 import com.chenpengfei.taiyuantravel.R;
 import com.chenpengfei.taiyuantravel.adapter.NavigationBarAdapter;
 import com.chenpengfei.taiyuantravel.fragment.MainFragment;
 import com.chenpengfei.taiyuantravel.fragment.RouteFragment;
 import com.chenpengfei.taiyuantravel.fragment.StationFragment;
+import com.chenpengfei.taiyuantravel.util.Const;
+
 import java.util.ArrayList;
 
 /**
@@ -84,8 +88,20 @@ public class MainActivity extends BaseActivity {
                 break;
             case R.id.button_main_search: //点击查询按钮
                 startActivity(new Intent(MainActivity.this, RouteLineActivity.class));
+            case R.id.edit_main_start_address:
+                startActivityForResult(new Intent(MainActivity.this, PoiAddressActivity.class), Const.MAIN_SEARCH_ADDRESS_RESULT_REQUEST);
                 break;
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(data == null) return;
+        if(requestCode == Const.MAIN_SEARCH_ADDRESS_RESULT_REQUEST) {
+            SuggestionResult.SuggestionInfo suggestionsInfo = (SuggestionResult.SuggestionInfo) data.getParcelableExtra("suggestionsInfo");
+            System.out.println(suggestionsInfo.key+"=========");
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
