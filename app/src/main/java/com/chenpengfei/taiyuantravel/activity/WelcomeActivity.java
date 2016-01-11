@@ -16,6 +16,7 @@ public class WelcomeActivity extends BaseActivity {
     protected void onCreateActivity(Bundle savedInstanceState) {
         setContentView(R.layout.activity_welcome);
         startActivity(new Intent(WelcomeActivity.this, MainActivity.class));
+        finish();
     }
 
 

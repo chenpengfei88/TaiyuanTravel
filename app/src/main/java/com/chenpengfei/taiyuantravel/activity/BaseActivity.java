@@ -3,6 +3,7 @@ package com.chenpengfei.taiyuantravel.activity;
 import android.app.ActionBar;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.style.AbsoluteSizeSpan;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.baidu.mapapi.SDKInitializer;
+import com.chenpengfei.taiyuantravel.R;
 
 /**
  *  @copyright  陈鹏飞
@@ -20,37 +22,33 @@ import com.baidu.mapapi.SDKInitializer;
  */
 public class BaseActivity extends FragmentActivity {
 
-    private ActionBar actionBar;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        actionBar = getActionBar();
         SDKInitializer.initialize(getApplicationContext());
         onCreateActivity(savedInstanceState);
     }
 
     /**
      *
-     * @param actionBarTitle title内容
-     * @description 设置title的字体内容和字体大小
+     * @param toolBarTitle
+     * @description 设置toolbar样式
      */
-    public void setActionBarTitle(String actionBarTitle, boolean isDiaplayHomeAsUp) {
-        if(actionBar == null) return;
-        SpannableStringBuilder titleContent = new SpannableStringBuilder(actionBarTitle);
-        titleContent.setSpan(new AbsoluteSizeSpan(55), 0, actionBarTitle.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE); //设置字体大小
-        actionBar.setTitle(titleContent);
-        actionBar.setDisplayHomeAsUpEnabled(isDiaplayHomeAsUp);
+    public void setToolBarStyle(String toolBarTitle) {
+        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mToolbar.setLogo(R.drawable.icon_taiyuan_travel);
+        SpannableStringBuilder titleContent = new SpannableStringBuilder(toolBarTitle);
+        titleContent.setSpan(new AbsoluteSizeSpan(52), 0, toolBarTitle.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE); //设置字体大小
+        mToolbar.setTitle(titleContent);
     }
 
     /**
      * @param view
-     * @description actionbar添加自定义view
+     * @description 给toolbar添加view
      */
-    public void addCustomView(View view) {
-        actionBar.setTitle("");
-        actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        actionBar.setCustomView(view);
+    public void toolBarAddView(View view) {
+        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mToolbar.addView(view);
     }
 
     /**
@@ -61,6 +59,16 @@ public class BaseActivity extends FragmentActivity {
      */
     public String getStringContent(int content) {
         return getResources().getString(content);
+    }
+
+    /**
+     *
+     * @param content
+     * @return String[]
+     * @description 根据ID得到string数组内容
+     */
+    public String[] getStringContentArray(int content) {
+        return getResources().getStringArray(content);
     }
 
     /**

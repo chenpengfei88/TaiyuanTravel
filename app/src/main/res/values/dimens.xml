@@ -3,7 +3,7 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
-    <!-- 字体大小-->
+    <!-- 字体大小-->o
     <dimen name="text_typeface_size_one">14sp</dimen>
     <dimen name="text_typeface_size_three">16sp</dimen>
     <dimen name="text_typeface_size_two">18sp</dimen>

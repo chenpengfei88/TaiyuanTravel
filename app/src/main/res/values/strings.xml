@@ -17,4 +17,18 @@
     <string name="title_station_programme">线路%s</string>
     <string name="edit_main_address_search">输入关键词</string>
 
+    <string name="string_route_line_walk_start">步行</string>
+    <string name="string_route_line_walk_end">米</string>
+    <string name="string_route_line_transit_start">乘坐</string>
+    <string name="string_route_line_transit_end">路</string>
+    <string name="string_route_line_zhi_end">支</string>
+    <string name="string_route_line_station_start">经过</string>
+    <string name="string_route_line_station_end">站</string>
+
+    <array name="tab_main_array">
+        <item>首页</item>
+        <item>站点</item>
+        <item>线路</item>
+    </array>
+
 </resources>

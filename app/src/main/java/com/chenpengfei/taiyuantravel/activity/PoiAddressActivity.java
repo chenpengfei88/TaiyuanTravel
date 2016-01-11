@@ -10,7 +10,6 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
-
 import com.baidu.mapapi.search.sug.OnGetSuggestionResultListener;
 import com.baidu.mapapi.search.sug.SuggestionResult;
 import com.baidu.mapapi.search.sug.SuggestionSearch;
@@ -18,7 +17,6 @@ import com.baidu.mapapi.search.sug.SuggestionSearchOption;
 import com.chenpengfei.taiyuantravel.R;
 import com.chenpengfei.taiyuantravel.adapter.PoiAddressListAdapter;
 import com.chenpengfei.taiyuantravel.customview.CustomToast;
-
 import java.util.List;
 
 /**
@@ -43,7 +41,7 @@ public class PoiAddressActivity extends BaseActivity {
     private void initView() {
         //添加actionbar上的搜索地址框
         actionBarSearchView = getLayoutInflater().inflate(R.layout.activity_search_address, null);
-        addCustomView(actionBarSearchView);
+
         poiAddressListView = (ListView) findViewById(R.id.list_main_search_address);
         searchAddressEdit = (EditText) actionBarSearchView.findViewById(R.id.edit_main_search);
         searchAddressEdit.addTextChangedListener(new TextWatcher(){
@@ -83,7 +81,7 @@ public class PoiAddressActivity extends BaseActivity {
                     SuggestionResult.SuggestionInfo suggestionsInfo = (SuggestionResult.SuggestionInfo) view.getTag();
                     Intent intent = getIntent();
                     intent.putExtra("suggestionsInfo", suggestionsInfo);
-                    setResult(0, intent);
+                    setResult(intent.getIntExtra("address_type", 0), intent);
                     finish();
                 }
             });

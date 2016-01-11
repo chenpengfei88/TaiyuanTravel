@@ -14,13 +14,17 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/layout_margin_two">
+        android:layout_marginLeft="@dimen/layout_margin_two"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
 
         <ImageView
             android:id="@+id/image_main_exchange"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/tab_route_gray"
+            android:onClick="btnClick"
+            android:clickable="true"
             android:layout_centerVertical="true"/>
 
         <ImageView
@@ -29,17 +33,20 @@
             android:layout_height="wrap_content"
             android:src="@drawable/icon_transist_input_start"
             android:layout_toRightOf="@id/image_main_exchange"
-            android:layout_marginLeft="@dimen/layout_margin_two"
+            android:layout_marginLeft="@dimen/layout_margin_four"
             android:layout_marginTop="@dimen/layout_margin_four"/>
 
-        <EditText
-            android:id="@+id/edit_main_start_address"
+        <TextView
+            android:id="@+id/text_main_start_address"
             android:layout_width="match_parent"
             android:layout_height="@dimen/layout_height_one"
             android:layout_toRightOf="@id/image_main_start_address"
             android:background="@android:color/transparent"
-            android:textColor="@color/gray_color_three"
+            android:textColorHint="@color/gray_color_three"
+            android:textColor="@color/gray_color_one"
+            android:textSize="@dimen/text_typeface_size_two"
             android:layout_marginLeft="@dimen/layout_margin_three"
+            android:gravity="center_vertical"
             android:onClick="btnClick"
             android:clickable="true"
             android:hint="@string/edit_main_start_address_hint"/>
@@ -50,8 +57,8 @@
             android:layout_height="1px"
             android:background="@color/gray_color_three"
             android:layout_toRightOf="@id/image_main_exchange"
-            android:layout_below="@id/edit_main_start_address"
-            android:layout_marginLeft="@dimen/layout_margin_two"
+            android:layout_below="@id/text_main_start_address"
+            android:layout_marginLeft="@dimen/layout_margin_four"
            />
 
         <ImageView
@@ -61,19 +68,24 @@
             android:layout_below="@id/view_main_line"
             android:src="@drawable/icon_transist_input_end"
             android:layout_toRightOf="@id/image_main_exchange"
-            android:layout_marginLeft="@dimen/layout_margin_two"
+            android:layout_marginLeft="@dimen/layout_margin_four"
             android:layout_marginTop="@dimen/layout_margin_four"/>
 
-        <EditText
-            android:id="@+id/edit_main_end_address"
+        <TextView
+            android:id="@+id/text_main_end_address"
             android:layout_width="match_parent"
             android:layout_height="@dimen/layout_height_one"
             android:layout_toRightOf="@id/image_main_end_address"
             android:layout_below="@id/view_main_line"
             android:background="@android:color/transparent"
-            android:textColor="@color/gray_color_three"
+            android:textColor="@color/gray_color_one"
+            android:textColorHint="@color/gray_color_three"
+            android:textSize="@dimen/text_typeface_size_two"
             android:layout_marginLeft="@dimen/layout_margin_three"
-            android:hint="@string/edit_main_start_address_hint"/>
+            android:gravity="center_vertical"
+            android:onClick="btnClick"
+            android:clickable="true"
+            android:hint="@string/edit_main_end_address_hint"/>
     </RelativeLayout>
 
     <View
@@ -91,6 +103,7 @@
         android:background="@drawable/style_button_main_search_bg"
         android:layout_margin="@dimen/layout_margin_one"
         android:onClick="btnClick"
+        android:textColor="@android:color/white"
         android:textSize="@dimen/text_typeface_size_two"/>
 
 </LinearLayout>

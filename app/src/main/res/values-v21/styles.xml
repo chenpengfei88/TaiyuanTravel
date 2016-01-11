@@ -1,56 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="AppTheme" parent="android:Theme.Material.Light">
-        <!-- 设置actionbar背景色-->
-        <item name="android:colorPrimary">@color/green_one</item>
-        <!-- 设置actionbar上面状态栏背景色-->
-        <item name="android:colorPrimaryDark">@color/green_two</item>
-        <!-- 设置actionbar里面的字体颜色-->
-        <item name="android:textColorPrimary">@android:color/white</item>
-        <item name="android:windowAnimationStyle">@style/AnimationActivity</item>
+    <style name="AppTheme" parent="@style/AppBaseTheme">
     </style>
 
-    <style name="AnimationActivity" parent="@android:style/Animation.Activity">
-        <item name="android:activityOpenEnterAnimation">@anim/activity_open_in_anim</item>
-        <item name="android:activityOpenExitAnimation">@anim/activity_open_out_anim</item>
-        <item name="android:activityCloseEnterAnimation">@anim/activity_close_in_anim</item>
-        <item name="android:activityCloseExitAnimation">@anim/activity_close_out_anim</item>
-    </style>
-
-    <style name="WelcomeTheme" parent="android:Theme.Material.Light">
+    <style name="WelcomeTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowNoTitle">true</item>
-    </style>
-
-    <style name="radio_navigationbar_public_style">
-        <item name="android:gravity">center_horizontal</item>
-        <item name="android:paddingTop">@dimen/radio_padding_top</item>
-        <item name="android:paddingBottom">6dp</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:button">@null</item>
-        <item name="android:singleLine">true</item>
-        <item name="android:drawablePadding">@dimen/radio_padding_drawable</item>
-        <item name="android:layout_weight">1</item>
-        <item name="android:textSize">@dimen/text_typeface_size_one</item>
-        <item name="android:textColor">@drawable/selector_radio_navigation_textcolor</item>
-    </style>
-
-    <!-- 导航栏首页菜单样式-->
-    <style name="radio_navigationbar_main_style" parent="radio_navigationbar_public_style">
-        <item name="android:drawableTop">@drawable/selector_radio_navigation_main_image</item>
-        <item name="android:text">@string/tab_main_main</item>
-    </style>
-
-    <!-- 导航栏站点菜单样式-->
-    <style name="radio_navigationbar_station_style" parent="radio_navigationbar_public_style">
-        <item name="android:drawableTop">@drawable/selector_radio_navigation_station_image</item>
-        <item name="android:text">@string/tab_main_station</item>
-    </style>
-
-    <!-- 导航栏线路菜单样式-->
-    <style name="radio_navigationbar_route_style" parent="radio_navigationbar_public_style">
-        <item name="android:drawableTop">@drawable/selector_radio_navigation_route_image</item>
-        <item name="android:text">@string/tab_main_route</item>
     </style>
 
 </resources>

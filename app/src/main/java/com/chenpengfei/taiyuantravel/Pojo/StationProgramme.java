@@ -21,6 +21,8 @@ public class StationProgramme {
         this.programmeName = programmeName;
     }
 
+    public StationProgramme() {
+    }
 
     public String getProgrammeName() {
         return programmeName;

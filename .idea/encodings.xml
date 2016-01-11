@@ -2,6 +2,7 @@
 <project version="4">
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/app/libs/android-support-v13.jar" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/libs/android-support-v7-appcompat.jar" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/chenpengfei/taiyuantravel/adapter/StationProgrammeExpandableAdapter.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/anim/activity_close_in_anim.xml" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/anim/activity_close_out_anim.xml" charset="GBK" />

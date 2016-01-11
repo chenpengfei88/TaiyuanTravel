@@ -5,6 +5,8 @@
     android:orientation="vertical"
     android:background="@android:color/white">
 
+    <include layout="@layout/activity_toolbar"/>
+
     <ExpandableListView
         android:id="@+id/expandable_main_station_programme"
         android:layout_width="match_parent"

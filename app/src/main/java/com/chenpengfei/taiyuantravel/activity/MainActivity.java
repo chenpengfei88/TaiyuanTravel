@@ -1,21 +1,19 @@
 package com.chenpengfei.taiyuantravel.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.RadioButton;
-
-import com.baidu.mapapi.search.sug.SuggestionResult;
 import com.chenpengfei.taiyuantravel.R;
 import com.chenpengfei.taiyuantravel.adapter.NavigationBarAdapter;
 import com.chenpengfei.taiyuantravel.fragment.MainFragment;
 import com.chenpengfei.taiyuantravel.fragment.RouteFragment;
 import com.chenpengfei.taiyuantravel.fragment.StationFragment;
+import com.chenpengfei.taiyuantravel.pojo.EventType;
 import com.chenpengfei.taiyuantravel.util.Const;
-
+import com.ypy.eventbus.EventBus;
 import java.util.ArrayList;
 
 /**
@@ -31,11 +29,12 @@ public class MainActivity extends BaseActivity {
     private ArrayList<Fragment> fragmentArrayList = new ArrayList<Fragment>();
     private ArrayList<RadioButton> radioButtonArrayList = new ArrayList<RadioButton>();
     private FragmentManager fragmentManager;
+    private String[] tabMainArray;
 
     @Override
     protected void onCreateActivity(Bundle savedInstanceState) {
         setContentView(R.layout.activity_main);
-        setActionBarTitle(getStringContent(R.string.app_name), false);
+        setToolBarStyle(" " + getStringContent(R.string.tab_main_main));
         fragmentManager = getSupportFragmentManager();
         onGetInstanceState(savedInstanceState);
         initView();
@@ -61,6 +60,7 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onPageSelected(int i) {
                 radioButtonArrayList.get(i).setChecked(true);
+                setToolBarStyleByPosition(i);
             }
 
             @Override
@@ -72,6 +72,16 @@ public class MainActivity extends BaseActivity {
         radioButtonArrayList.add((RadioButton) findViewById(R.id.radiobutton_main_main));
         radioButtonArrayList.add((RadioButton) findViewById(R.id.radiobutton_main_station));
         radioButtonArrayList.add((RadioButton) findViewById(R.id.radiobutton_main_route));
+        tabMainArray = getStringContentArray(R.array.tab_main_array);
+    }
+
+    /**
+     *
+     * @param position
+     * @description 根据position设置toolbar样式
+     */
+    public void setToolBarStyleByPosition(int position) {
+        setToolBarStyle(" " + tabMainArray[position]);
     }
 
     //相应点击事件
@@ -79,30 +89,33 @@ public class MainActivity extends BaseActivity {
         switch (v.getId()){
             case R.id.radiobutton_main_main:
                 contentViewPager.setCurrentItem(0);
+                setToolBarStyleByPosition(0);
                 break;
             case R.id.radiobutton_main_station:
                 contentViewPager.setCurrentItem(1);
+                setToolBarStyleByPosition(1);
                 break;
             case R.id.radiobutton_main_route:
                 contentViewPager.setCurrentItem(2);
+                setToolBarStyleByPosition(2);
                 break;
             case R.id.button_main_search: //点击查询按钮
-                startActivity(new Intent(MainActivity.this, RouteLineActivity.class));
-            case R.id.edit_main_start_address:
-                startActivityForResult(new Intent(MainActivity.this, PoiAddressActivity.class), Const.MAIN_SEARCH_ADDRESS_RESULT_REQUEST);
+                EventBus.getDefault().post(new EventType(Const.EVENTBUS_EVENT_TYPE_THREE));
                 break;
+            case R.id.text_main_start_address: //开始地址编辑框
+                EventBus.getDefault().post(new EventType(Const.EVENTBUS_EVENT_TYPE_ONE));
+                break;
+            case R.id.text_main_end_address: //结束地址编辑框
+                EventBus.getDefault().post(new EventType(Const.EVENTBUS_EVENT_TYPE_TWO));
+                break;
+            case R.id.image_main_exchange: //地址交换image
+                EventBus.getDefault().post(new EventType(Const.EVENTBUS_EVENT_TYPE_FOUR));
+                break;
+
         }
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(data == null) return;
-        if(requestCode == Const.MAIN_SEARCH_ADDRESS_RESULT_REQUEST) {
-            SuggestionResult.SuggestionInfo suggestionsInfo = (SuggestionResult.SuggestionInfo) data.getParcelableExtra("suggestionsInfo");
-            System.out.println(suggestionsInfo.key+"=========");
-        }
-        super.onActivityResult(requestCode, resultCode, data);
-    }
+
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
