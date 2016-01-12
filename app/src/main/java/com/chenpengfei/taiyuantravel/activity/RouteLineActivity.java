@@ -2,7 +2,9 @@ package com.chenpengfei.taiyuantravel.activity;
 
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.ExpandableListView;
+import android.widget.ImageView;
 import android.widget.Toast;
 import com.baidu.mapapi.model.LatLng;
 import com.baidu.mapapi.search.core.SearchResult;
@@ -18,6 +20,7 @@ import com.chenpengfei.taiyuantravel.pojo.StationProgramme;
 import com.chenpengfei.taiyuantravel.R;
 import com.chenpengfei.taiyuantravel.adapter.StationProgrammeExpandableAdapter;
 import com.chenpengfei.taiyuantravel.customview.CustomToast;
+import com.chenpengfei.taiyuantravel.util.CommonUtil;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +30,7 @@ import java.util.List;
  *  @email 450032215@qq.com
  *  @description 线路结果activity，输入起点和终点查询得到的线路list数据
  */
-public class RouteLineActivity extends BaseActivity implements OnGetRoutePlanResultListener {
+public class RouteLineActivity extends BaseActionBarActivity implements OnGetRoutePlanResultListener {
 
     private LatLng startLatLng, endLatLng;
     private PlanNode startNode, endNode; //开始和结束地点node
@@ -57,7 +60,7 @@ public class RouteLineActivity extends BaseActivity implements OnGetRoutePlanRes
         // 初始化搜索模块，注册事件监听
         mSearch = RoutePlanSearch.newInstance();
         mSearch.setOnGetRoutePlanResultListener(this);
-        mSearch.transitSearch((new TransitRoutePlanOption()).from(startNode).city("太原").to(endNode));
+        mSearch.transitSearch((new TransitRoutePlanOption()).from(startNode).city(getStringContent(R.string.search_city)).to(endNode));
     }
 
 
@@ -91,12 +94,41 @@ public class RouteLineActivity extends BaseActivity implements OnGetRoutePlanRes
                     transitStepArrayList.add(new StationProgramme(routeLineItem));
                 }
                 programmeName = "";
-                getRouteLineDetailData(routeLineStringBuffer.toString(), getStringContent(R.string.string_route_line_transit_start), getStringContent(R.string.string_route_line_transit_end));
+                //得到公交数据
+                getRouteLineDetailData(getRouteLineDetailData(routeLineStringBuffer.toString(), getStringContent(R.string.string_route_line_transit_start), getStringContent(R.string.string_route_line_transit_end))
+                        , getStringContent(R.string.string_route_line_transit_start), getStringContent(R.string.string_route_line_zhi_end));
                 stationProgramme.setProgrammeName(programmeName);
+                stationProgramme.setStationTime(transitRouteLine.getDuration());
                 stationProgramme.setChildStationProgrammeList(transitStepArrayList);
                 stationProgrammeArrayList.add(stationProgramme);
             }
-            stationProgrammeExpandableListView.setAdapter(new StationProgrammeExpandableAdapter(getLayoutInflater(), stationProgrammeArrayList));
+            stationProgrammeExpandableListView.setAdapter(new StationProgrammeExpandableAdapter(getLayoutInflater(), this, stationProgrammeArrayList));
+            //listview展开事件
+            stationProgrammeExpandableListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
+                @Override
+                public void onGroupExpand(int i) {
+                    View view = stationProgrammeExpandableListView.getChildAt(i);
+                    if(view!=null){
+                        ImageView arrowImageView = (ImageView) view.findViewById(R.id.image_main_route_line_arrow);
+                        if(arrowImageView!=null){
+                            arrowImageView.setImageResource(R.drawable.icon_up_arrow);
+                        }
+                    }
+                }
+            });
+            //listview合闭事件
+            stationProgrammeExpandableListView.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
+                @Override
+                public void onGroupCollapse(int i) {
+                    View view = stationProgrammeExpandableListView.getChildAt(i);
+                    if (view != null) {
+                        ImageView arrowImageView = (ImageView) view.findViewById(R.id.image_main_route_line_arrow);
+                        if (arrowImageView != null) {
+                            arrowImageView.setImageResource(R.drawable.icon_down_arrow);
+                        }
+                    }
+                }
+            });
             if(stationProgrammeArrayList.size() > 0) stationProgrammeExpandableListView.expandGroup(0);
         }
     }
@@ -106,16 +138,29 @@ public class RouteLineActivity extends BaseActivity implements OnGetRoutePlanRes
     }
 
 
-    private void getRouteLineDetailData(String content, String startTransit, String endTransit) {
+    /**
+     *
+     * @param content
+     * @param startTransit
+     * @param endTransit
+     * @description 截取公交线路
+     */
+    private String getRouteLineDetailData(String content, String startTransit, String endTransit) {
         //截取公交
         int transitStartIndex = content.indexOf(startTransit);
-        if(transitStartIndex < 0) return;
-        String c = content.substring(transitStartIndex + startTransit.length());
-        int transitEndIndex = c.indexOf(endTransit);
+        if(transitStartIndex < 0) return content;
+        String subContent = content.substring(transitStartIndex + startTransit.length());
+        int transitEndIndex = subContent.indexOf(endTransit);
+        if(transitEndIndex < 0) return content;
 
-        String transitInt = content.substring(transitStartIndex + startTransit.length(), transitStartIndex + startTransit.length() + transitEndIndex);
-        programmeName = programmeName + (TextUtils.isEmpty(programmeName) ? "" : "-") + transitInt;
-        content = content.replace(startTransit + transitInt + endTransit, "");
-        getRouteLineDetailData(content, getStringContent(R.string.string_route_line_transit_start), getStringContent(R.string.string_route_line_transit_end));
+        int endSubIndex = transitStartIndex + startTransit.length() + transitEndIndex;
+        String transitInt = content.substring(transitStartIndex + startTransit.length(), endSubIndex);
+        //是公交线路
+        if(CommonUtil.isNumeric(transitInt)) {
+            programmeName = programmeName + (TextUtils.isEmpty(programmeName) ? "" : "-") + transitInt + endTransit;
+            content = content.replace(startTransit + transitInt + endTransit, "");
+            return getRouteLineDetailData(content, getStringContent(R.string.string_route_line_transit_start), getStringContent(R.string.string_route_line_transit_end));
+        }
+        return content;
     }
 }

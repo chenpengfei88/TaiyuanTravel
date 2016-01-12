@@ -14,17 +14,16 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/layout_margin_two"
-        android:focusable="true"
-        android:focusableInTouchMode="true">
+        android:layout_marginLeft="@dimen/layout_margin_two">
 
         <ImageView
             android:id="@+id/image_main_exchange"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/tab_route_gray"
+            android:background="@drawable/icon_address_exchange"
             android:onClick="btnClick"
             android:clickable="true"
+            android:padding="@dimen/layout_padding_four"
             android:layout_centerVertical="true"/>
 
         <ImageView
@@ -100,7 +99,7 @@
         android:text="@string/button_main_search"
         android:paddingTop="@dimen/layout_padding_one"
         android:paddingBottom="@dimen/layout_padding_one"
-        android:background="@drawable/style_button_main_search_bg"
+        android:background="@drawable/selector_button_onclick_bg"
         android:layout_margin="@dimen/layout_margin_one"
         android:onClick="btnClick"
         android:textColor="@android:color/white"

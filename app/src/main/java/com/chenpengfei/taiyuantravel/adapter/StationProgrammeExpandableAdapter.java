@@ -1,5 +1,6 @@
 package com.chenpengfei.taiyuantravel.adapter;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,10 +20,12 @@ public class StationProgrammeExpandableAdapter extends BaseExpandableListAdapter
 
     private LayoutInflater lf;
     private ArrayList<StationProgramme> list = new ArrayList<StationProgramme>();
+    private Context context;
 
-    public StationProgrammeExpandableAdapter(LayoutInflater lf, ArrayList<StationProgramme> list){
+    public StationProgrammeExpandableAdapter(LayoutInflater lf, Context context, ArrayList<StationProgramme> list){
         this.lf = lf;
         this.list = list;
+        this.context = context;
     }
     @Override
     public int getGroupCount() {
@@ -64,7 +67,9 @@ public class StationProgrammeExpandableAdapter extends BaseExpandableListAdapter
         if(convertView == null){
             convertView = lf.inflate(R.layout.activity_station_programme_title_item, null);
         }
-        ((TextView)convertView.findViewById(R.id.text_main_title_station_programme)).setText(((StationProgramme)getGroup(groupPosition)).getProgrammeName());
+        ((TextView)convertView.findViewById(R.id.text_main_title_station_programme)).setText(((StationProgramme)getGroup(groupPosition)).getProgrammeName()); //公交线路名
+        ((TextView)convertView.findViewById(R.id.text_main_title_station_time)).setText(context.getResources().getString(R.string.title_station_time, ((StationProgramme) getGroup(groupPosition)).getStationTime() / 60)); //耗时多久
+        ((TextView)convertView.findViewById(R.id.text_main_roule_line_bumber)).setText(groupPosition + 1 + "");
         return convertView;
     }
 

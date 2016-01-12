@@ -17,6 +17,7 @@ import com.baidu.mapapi.search.sug.SuggestionSearchOption;
 import com.chenpengfei.taiyuantravel.R;
 import com.chenpengfei.taiyuantravel.adapter.PoiAddressListAdapter;
 import com.chenpengfei.taiyuantravel.customview.CustomToast;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,7 +26,7 @@ import java.util.List;
  *  @email 450032215@qq.com
  *  @description 通过关键词检索地址activity
  */
-public class PoiAddressActivity extends BaseActivity {
+public class PoiAddressActivity extends BaseActionBarActivity {
 
     private ListView poiAddressListView;
     private EditText searchAddressEdit;
@@ -41,11 +42,10 @@ public class PoiAddressActivity extends BaseActivity {
     private void initView() {
         //添加actionbar上的搜索地址框
         actionBarSearchView = getLayoutInflater().inflate(R.layout.activity_search_address, null);
-
+        toolBarAddView(actionBarSearchView);
         poiAddressListView = (ListView) findViewById(R.id.list_main_search_address);
         searchAddressEdit = (EditText) actionBarSearchView.findViewById(R.id.edit_main_search);
         searchAddressEdit.addTextChangedListener(new TextWatcher(){
-
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
             }
@@ -56,6 +56,8 @@ public class PoiAddressActivity extends BaseActivity {
             public void afterTextChanged(Editable editable) {
                 String addressKeyword = searchAddressEdit.getText().toString();
                 if(!TextUtils.isEmpty(addressKeyword)) {
+                    if(!addressKeyword.contains(getStringContent(R.string.search_city)))
+                        addressKeyword = getStringContent(R.string.search_city) + addressKeyword;
                     mSuggestionSearch.requestSuggestion((new SuggestionSearchOption()).keyword(addressKeyword).city(getStringContent(R.string.search_city)));
                 }
             }
@@ -73,8 +75,15 @@ public class PoiAddressActivity extends BaseActivity {
                 return;
             }
             //查询结果
+            List<SuggestionResult.SuggestionInfo> resultSuggestionInfoList = new ArrayList<SuggestionResult.SuggestionInfo>();
             List<SuggestionResult.SuggestionInfo> suggestionInfoList = suggestionResult.getAllSuggestions();
-            poiAddressListView.setAdapter(new PoiAddressListAdapter(suggestionInfoList, getLayoutInflater(), PoiAddressActivity.this));
+            int size = suggestionInfoList.size();
+            for(int i = 0; i < size; i++) {
+                if(suggestionInfoList.get(i).pt != null) {
+                    resultSuggestionInfoList.add(suggestionInfoList.get(i));
+                }
+            }
+            poiAddressListView.setAdapter(new PoiAddressListAdapter(resultSuggestionInfoList, getLayoutInflater(), PoiAddressActivity.this));
             poiAddressListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {

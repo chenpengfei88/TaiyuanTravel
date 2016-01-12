@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class StationProgramme {
 
     private String programmeName; //线路名称
-    private String stationTime; //线路时间
+    private int stationTime; //线路时间
     private String walkLength; //步行长度
     private String stationCount; //站的数量
 
@@ -40,14 +40,6 @@ public class StationProgramme {
         this.childStationProgrammeList = childStationProgrammeList;
     }
 
-    public String getStationTime() {
-        return stationTime;
-    }
-
-    public void setStationTime(String stationTime) {
-        this.stationTime = stationTime;
-    }
-
     public String getWalkLength() {
         return walkLength;
     }
@@ -62,5 +54,13 @@ public class StationProgramme {
 
     public void setStationCount(String stationCount) {
         this.stationCount = stationCount;
+    }
+
+    public int getStationTime() {
+        return stationTime;
+    }
+
+    public void setStationTime(int stationTime) {
+        this.stationTime = stationTime;
     }
 }

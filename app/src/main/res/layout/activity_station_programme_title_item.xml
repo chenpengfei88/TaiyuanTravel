@@ -1,17 +1,50 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:background="@color/gray_color_four">
+
+    <TextView
+        android:id="@+id/text_main_roule_line_bumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:background="@drawable/style_main_roult_line_number_bg"
+        android:textColor="@android:color/white"
+        android:layout_marginLeft="@dimen/layout_margin_three"
+        android:paddingLeft="@dimen/layout_padding_four"
+        android:paddingRight="@dimen/layout_padding_four"/>
 
    <TextView
        android:id="@+id/text_main_title_station_programme"
-       android:layout_width="match_parent"
+       android:layout_width="wrap_content"
        android:layout_height="wrap_content"
        android:textSize="@dimen/text_typeface_size_two"
        android:textColor="@color/gray_color_one"
-       android:padding="@dimen/layout_padding_one"
-       android:textStyle="bold"
-       android:background="@color/gray_color_four"/>
+       android:layout_marginLeft="@dimen/layout_margin_two"
+       android:layout_marginTop="@dimen/layout_margin_three"
+       android:layout_toRightOf="@id/text_main_roule_line_bumber"
+       android:textStyle="bold" />
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/text_main_title_station_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/text_main_title_station_programme"
+        android:layout_toRightOf="@id/text_main_roule_line_bumber"
+        android:layout_marginLeft="@dimen/layout_margin_two"
+        android:paddingBottom="@dimen/layout_padding_two"
+        android:paddingTop="@dimen/layout_padding_three"
+        android:textColor="@color/gray_color_one"
+        android:textSize="@dimen/text_typeface_size_four"/>
+
+    <ImageView
+        android:id="@+id/image_main_route_line_arrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/icon_down_arrow"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/layout_margin_three"/>
+
+</RelativeLayout>

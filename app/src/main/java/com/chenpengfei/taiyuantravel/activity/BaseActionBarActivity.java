@@ -1,7 +1,7 @@
 package com.chenpengfei.taiyuantravel.activity;
 
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
@@ -15,9 +15,9 @@ import com.chenpengfei.taiyuantravel.R;
  *  @copyright  陈鹏飞
  *  @author pengfei.chen
  *  @email 450032215@qq.com
- *  @description activity基础类
+ *  @description ActionBar activity基础类
  */
-public class BaseActivity extends FragmentActivity {
+public class BaseActionBarActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,15 +31,14 @@ public class BaseActivity extends FragmentActivity {
      * @param toolBarTitle
      * @description 设置toolbar样式
      */
-    public void setToolBarStyle(String toolBarTitle, int logo) {
+    public void setToolBarStyle(String toolBarTitle) {
         Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        if(logo > 0) {
-            mToolbar.setLogo(logo);
-        } else
-            mToolbar.setLogo(R.drawable.icon_taiyuan_travel);
         SpannableStringBuilder titleContent = new SpannableStringBuilder(toolBarTitle);
         titleContent.setSpan(new AbsoluteSizeSpan(52), 0, toolBarTitle.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE); //设置字体大小
         mToolbar.setTitle(titleContent);
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.icon_back);
     }
 
     /**
@@ -48,6 +47,9 @@ public class BaseActivity extends FragmentActivity {
      */
     public void toolBarAddView(View view) {
         Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.icon_back);
         mToolbar.addView(view);
     }
 

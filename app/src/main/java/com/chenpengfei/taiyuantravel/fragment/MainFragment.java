@@ -31,6 +31,7 @@ public class MainFragment extends Fragment {
     private TextView startAddressText, endAddressText;
     private SuggestionResult.SuggestionInfo startSuggestionInfo, endSuggestionInfo; //开始和结束地址信息
     private String startAddress, endAddress;
+    private boolean startExchangeAnimationEnd = true, endExchangeAnimationEnd = true, isChange; //地址交换动画是否已经完成, ischange 是否执行过动画
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -70,8 +71,9 @@ public class MainFragment extends Fragment {
                 break;
             //点击查询
             case Const.EVENTBUS_EVENT_TYPE_THREE:
-                if(getActivity() == null || startSuggestionInfo == null || endSuggestionInfo == null) return;
+                if(getActivity() == null || startSuggestionInfo == null || endSuggestionInfo == null || startSuggestionInfo.pt == null || endSuggestionInfo.pt == null) return;
                 Intent intentThree = new Intent(getActivity(), RouteLineActivity.class);
+                CustomToast.makeText(getActivity(), "start=" + startSuggestionInfo.key +"=====end==" + endSuggestionInfo.key, Toast.LENGTH_SHORT).show();
                 //地址经纬度
                 intentThree.putExtra("start_address_lat", startSuggestionInfo.pt);
                 intentThree.putExtra("end_address_lat",  endSuggestionInfo.pt);
@@ -79,24 +81,27 @@ public class MainFragment extends Fragment {
                 break;
             //地址交换
             case Const.EVENTBUS_EVENT_TYPE_FOUR:
-                if(getActivity() == null || (TextUtils.isEmpty(startAddressText.getText().toString()) || TextUtils.isEmpty(endAddressText.getText().toString()))) return;
+                if(getActivity() == null || (TextUtils.isEmpty(startAddressText.getText().toString()) || TextUtils.isEmpty(endAddressText.getText().toString())) || (!startExchangeAnimationEnd && !endExchangeAnimationEnd)) return;
                 if(!TextUtils.isEmpty(startAddress) && !TextUtils.isEmpty(endAddress)){
                     startAddressText.setText(startAddress);
                     startAddressText.setTag(startSuggestionInfo);
                     endAddressText.setText(endAddress);
                     endAddressText.setTag(endSuggestionInfo);
                 }
+                isChange = true;
                 Animation startAddressAnimaiton = AnimationUtils.loadAnimation(getActivity(), R.anim.text_start_address_translate);
                 startAddressText.startAnimation(startAddressAnimaiton);
                 startAddressAnimaiton.setAnimationListener(new Animation.AnimationListener() {
                     @Override
                     public void onAnimationStart(Animation animation) {
+                        startExchangeAnimationEnd = false;
                     }
 
                     @Override
                     public void onAnimationEnd(Animation animation) {
                         endAddress = startAddressText.getText().toString();
                         endSuggestionInfo = (SuggestionResult.SuggestionInfo) startAddressText.getTag();
+                        startExchangeAnimationEnd = true;
                     }
 
                     @Override
@@ -108,12 +113,14 @@ public class MainFragment extends Fragment {
                 endAddressAnimaiton.setAnimationListener(new Animation.AnimationListener() {
                     @Override
                     public void onAnimationStart(Animation animation) {
+                        endExchangeAnimationEnd = false;
                     }
 
                     @Override
                     public void onAnimationEnd(Animation animation) {
                         startAddress = endAddressText.getText().toString();
                         startSuggestionInfo = (SuggestionResult.SuggestionInfo) endAddressText.getTag();
+                        endExchangeAnimationEnd = true;
                     }
 
                     @Override
@@ -131,14 +138,19 @@ public class MainFragment extends Fragment {
         if(requestCode == Const.MAIN_SEARCH_ADDRESS_RESULT_REQUEST_ONE && resultCode == Const.MAIN_SEARCH_ADDRESS_RESULT_REQUEST_ONE) {
             startSuggestionInfo = (SuggestionResult.SuggestionInfo) data.getParcelableExtra("suggestionsInfo");
             startAddress = startSuggestionInfo.key;
-            startAddressText.setText(startAddress);
-
+            if(isChange) {
+                endAddressText.setText(startAddress);
+            } else
+                startAddressText.setText(startAddress);
         }
         //结束地址选择以后
         if(requestCode == Const.MAIN_SEARCH_ADDRESS_RESULT_REQUEST_TWO && resultCode == Const.MAIN_SEARCH_ADDRESS_RESULT_REQUEST_TWO) {
             endSuggestionInfo = (SuggestionResult.SuggestionInfo) data.getParcelableExtra("suggestionsInfo");
             endAddress = endSuggestionInfo.key;
-            endAddressText.setText(endAddress);
+            if(isChange){
+                startAddressText.setText(endAddress);
+            } else
+                endAddressText.setText(endAddress);
         }
         super.onActivityResult(requestCode, resultCode, data);
     }

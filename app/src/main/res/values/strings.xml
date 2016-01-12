@@ -15,6 +15,7 @@
     <string name="toast_no_result">抱歉，未能找到结果</string>
     <string name="search_city">太原市</string>
     <string name="title_station_programme">线路%s</string>
+    <string name="title_station_time">耗时%s分钟</string>
     <string name="edit_main_address_search">输入关键词</string>
 
     <string name="string_route_line_walk_start">步行</string>

@@ -1,9 +1,16 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/selector_list_onclick_item_bg"
-    android:orientation="vertical">
+    android:background="@drawable/selector_list_onclick_item_bg">
+
+    <ImageView
+        android:id="@+id/image_main_poi_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/icon_transist_input_start"
+        android:layout_marginLeft="@dimen/layout_margin_two"
+        android:layout_centerVertical="true"/>
 
     <TextView
         android:id="@+id/text_main_poi_address_detail"
@@ -14,7 +21,8 @@
         android:textStyle="bold"
         android:paddingLeft="@dimen/layout_padding_one"
         android:paddingTop="@dimen/layout_padding_three"
-        android:paddingBottom="@dimen/layout_padding_three"/>
+        android:paddingBottom="@dimen/layout_padding_three"
+        android:layout_toRightOf="@id/image_main_poi_address"/>
 
     <TextView
         android:id="@+id/text_main_poi_address_detail_district"
@@ -24,5 +32,7 @@
         android:textSize="@dimen/text_typeface_size_one"
         android:includeFontPadding="false"
         android:paddingLeft="@dimen/layout_padding_one"
+        android:layout_toRightOf="@id/image_main_poi_address"
+        android:layout_below="@id/text_main_poi_address_detail"
         android:paddingBottom="@dimen/layout_padding_two"/>
-</LinearLayout>
+</RelativeLayout>

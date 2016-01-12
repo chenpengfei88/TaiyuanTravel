@@ -5,6 +5,7 @@
 
     <!-- 字体大小-->o
     <dimen name="text_typeface_size_one">14sp</dimen>
+    <dimen name="text_typeface_size_four">12sp</dimen>
     <dimen name="text_typeface_size_three">16sp</dimen>
     <dimen name="text_typeface_size_two">18sp</dimen>
 
@@ -18,6 +19,7 @@
     <dimen name="layout_padding_one">15dp</dimen>
     <dimen name="layout_padding_two">10dp</dimen>
     <dimen name="layout_padding_three">7dp</dimen>
+    <dimen name="layout_padding_four">5dp</dimen>
     <dimen name="radio_padding_drawable">3dp</dimen>
 
     <!-- 宽高-->

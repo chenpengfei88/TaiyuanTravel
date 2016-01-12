@@ -34,7 +34,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreateActivity(Bundle savedInstanceState) {
         setContentView(R.layout.activity_main);
-        setToolBarStyle(" " + getStringContent(R.string.tab_main_main));
+        setToolBarStyle("   " + getStringContent(R.string.tab_main_main), 0);
         fragmentManager = getSupportFragmentManager();
         onGetInstanceState(savedInstanceState);
         initView();
@@ -81,7 +81,7 @@ public class MainActivity extends BaseActivity {
      * @description 根据position设置toolbar样式
      */
     public void setToolBarStyleByPosition(int position) {
-        setToolBarStyle(" " + tabMainArray[position]);
+        setToolBarStyle(" " + tabMainArray[position], 0);
     }
 
     //相应点击事件
