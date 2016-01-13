@@ -15,6 +15,7 @@
     <dimen name="layout_margin_two">15dp</dimen>
     <dimen name="layout_margin_four">20dp</dimen>
     <dimen name="layout_margin_three">10dp</dimen>
+    <dimen name="layout_margin_five">5dp</dimen>
     <dimen name="button_margin_one">30dp</dimen>
     <dimen name="layout_padding_one">15dp</dimen>
     <dimen name="layout_padding_two">10dp</dimen>

@@ -11,12 +11,16 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.baidu.location.BDLocation;
+import com.baidu.location.BDLocationListener;
 import com.baidu.mapapi.search.sug.SuggestionResult;
 import com.chenpengfei.taiyuantravel.R;
 import com.chenpengfei.taiyuantravel.activity.PoiAddressActivity;
 import com.chenpengfei.taiyuantravel.activity.RouteLineActivity;
 import com.chenpengfei.taiyuantravel.customview.CustomToast;
 import com.chenpengfei.taiyuantravel.pojo.EventType;
+import com.chenpengfei.taiyuantravel.util.BaiduLocationUtil;
 import com.chenpengfei.taiyuantravel.util.Const;
 import com.ypy.eventbus.EventBus;
 
@@ -50,6 +54,15 @@ public class MainFragment extends Fragment {
         View view = getLayoutInflater(getArguments()).inflate(R.layout.activity_main_main, null);
         startAddressText = (TextView) view.findViewById(R.id.text_main_start_address);
         endAddressText = (TextView) view.findViewById(R.id.text_main_end_address);
+        BaiduLocationUtil.locationAddress(new BDLocationListener(){
+            @Override
+            public void onReceiveLocation(BDLocation bdLocation) {
+                String addressStr = bdLocation.getAddrStr();
+                if(!TextUtils.isEmpty(addressStr)) {
+                    startAddressText.setText(addressStr.replace(getResources().getString(R.string.tab_main_china), ""));
+                }
+            }
+        }, getActivity().getApplicationContext());
         return view;
     }
 

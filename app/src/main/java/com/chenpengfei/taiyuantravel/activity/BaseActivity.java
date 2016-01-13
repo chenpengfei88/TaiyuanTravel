@@ -32,6 +32,7 @@ public class BaseActivity extends FragmentActivity {
      * @description 设置toolbar样式
      */
     public void setToolBarStyle(String toolBarTitle, int logo) {
+        toolBarTitle = "  " + toolBarTitle;
         Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
         if(logo > 0) {
             mToolbar.setLogo(logo);

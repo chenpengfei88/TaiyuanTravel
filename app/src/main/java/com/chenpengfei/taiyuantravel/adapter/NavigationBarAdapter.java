@@ -15,12 +15,10 @@ public class NavigationBarAdapter extends FragmentPagerAdapter {
 
     private ArrayList<Fragment> fragmentArrayList = null;
 
-
     public NavigationBarAdapter(FragmentManager supportFragmentManager, ArrayList<Fragment> fragmentArrayList) {
         super(supportFragmentManager);
         this.fragmentArrayList = fragmentArrayList;
     }
-
 
     @Override
     public Fragment getItem(int i) {
