@@ -38,7 +38,7 @@ import java.util.ArrayList;
  *  @email 450032215@qq.com
  *  @description 显示站点内容的fragment
  */
-public class StationFragment extends Fragment implements OnGetBusLineSearchResultListener {
+public class StationFragment extends BaseFragment implements OnGetBusLineSearchResultListener {
 
     private PoiSearch mPoiSearch, mmPoisearch;
     private TextView searchStationText;

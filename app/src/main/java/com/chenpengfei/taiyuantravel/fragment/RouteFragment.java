@@ -37,7 +37,7 @@ import com.ypy.eventbus.EventBus;
  *  @email 450032215@qq.com
  *  @description 显示线路内容的fragment
  */
-public class RouteFragment extends Fragment implements OnGetBusLineSearchResultListener, OnGetPoiSearchResultListener {
+public class RouteFragment extends BaseFragment implements OnGetBusLineSearchResultListener, OnGetPoiSearchResultListener {
 
     private BusLineSearch mBusLineSearch = null;
     private PoiSearch mSearch = null; // 搜索模块，也可去掉地图模块独立使用
@@ -47,6 +47,7 @@ public class RouteFragment extends Fragment implements OnGetBusLineSearchResultL
     private TextView routeLineNameText, routeLineStartTimeText, routeLineEndTimeAndStationCountText; //线路名字, 线路开始时间，线路结束时间和站点数量,点击按钮搜索线路
     private LinearLayout timeAndStationCountLinearLayout; //时间和车站数量布局linarlayout
     private ImageView deleteSearchImage; //清空搜索内容
+    private View view;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -62,7 +63,7 @@ public class RouteFragment extends Fragment implements OnGetBusLineSearchResultL
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = getLayoutInflater(getArguments()).inflate(R.layout.activity_main_route, null);
+        view = getLayoutInflater(getArguments()).inflate(R.layout.activity_main_route, null);
         searchEdit = (EditText) view.findViewById(R.id.edit_route_line_search); //搜索框
         routeLineNameText = (TextView) view.findViewById(R.id.text_route_line_name); //线路名
         routeLineStartTimeText = (TextView) view.findViewById(R.id.text_route_line_start_time); //线路开始时间和站点数量
@@ -85,6 +86,7 @@ public class RouteFragment extends Fragment implements OnGetBusLineSearchResultL
                 String addressKeyword = searchEdit.getText().toString();
                 if(!TextUtils.isEmpty(addressKeyword)) {
                     deleteSearchImage.setVisibility(View.VISIBLE);
+                    showLoadView(view, getActivity());
                     mSearch.searchInCity((new PoiCitySearchOption()).city(getResources().getString(R.string.search_city)).keyword(addressKeyword));
                 } else {
                     deleteSearchImage.setVisibility(View.GONE);
@@ -104,6 +106,7 @@ public class RouteFragment extends Fragment implements OnGetBusLineSearchResultL
         routeLineEndTimeAndStationCountText.setText(DateUtils.getDateStr(busLineResult.getEndTime(), DateUtils.DATE_PATTERN_FIVE) + "         共" + busLineResult.getStations().size() + getResources().getString(R.string.string_route_line_station_end)); //晚班时间
         timeAndStationCountLinearLayout.setVisibility(View.VISIBLE);
         routeLineListView.setAdapter(new BusStationListAdapter(busLineResult.getStations(), getActivity().getLayoutInflater()));
+        hideLoadView();
     }
 
     @Override
