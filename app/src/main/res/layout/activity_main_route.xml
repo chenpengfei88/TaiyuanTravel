@@ -14,8 +14,9 @@
         android:padding="@dimen/layout_padding_two">
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:orientation="horizontal"
             android:background="@drawable/style_layout_search_bg">
 
@@ -47,6 +48,18 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginRight="@dimen/layout_margin_three"/>
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/text_route_line_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="搜索"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/text_typeface_size_two"
+            android:layout_gravity="center_vertical"
+            android:onClick="btnClick"
+            android:clickable="true"
+            android:layout_marginLeft="@dimen/layout_margin_three"/>
     </LinearLayout>
     <!-- 搜索框 -->
 

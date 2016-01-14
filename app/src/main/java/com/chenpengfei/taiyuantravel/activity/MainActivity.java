@@ -111,6 +111,12 @@ public class MainActivity extends BaseActivity {
             case R.id.image_main_exchange: //地址交换image
                 EventBus.getDefault().post(new EventType(Const.EVENTBUS_EVENT_TYPE_FOUR));
                 break;
+            case R.id.text_route_line_search: //搜索线路按钮
+                EventBus.getDefault().post(new EventType(Const.EVENTBUS_EVENT_TYPE_FIVE));
+                break;
+            case R.id.text_station_search: //选择站点
+                EventBus.getDefault().post(new EventType(Const.EVENTBUS_EVENT_TYPE_SIX));
+                break;
 
         }
     }

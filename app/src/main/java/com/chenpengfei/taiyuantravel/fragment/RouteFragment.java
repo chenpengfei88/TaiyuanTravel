@@ -2,9 +2,7 @@ package com.chenpengfei.taiyuantravel.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.text.Editable;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +12,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.baidu.mapapi.search.busline.BusLineResult;
 import com.baidu.mapapi.search.busline.BusLineSearch;
 import com.baidu.mapapi.search.busline.BusLineSearchOption;
@@ -29,7 +26,10 @@ import com.baidu.mapapi.search.poi.PoiSearch;
 import com.chenpengfei.taiyuantravel.R;
 import com.chenpengfei.taiyuantravel.adapter.BusStationListAdapter;
 import com.chenpengfei.taiyuantravel.customview.CustomToast;
+import com.chenpengfei.taiyuantravel.pojo.EventType;
+import com.chenpengfei.taiyuantravel.util.Const;
 import com.chenpengfei.taiyuantravel.util.DateUtils;
+import com.ypy.eventbus.EventBus;
 
 /**
  *  @copyright  陈鹏飞
@@ -44,34 +44,26 @@ public class RouteFragment extends Fragment implements OnGetBusLineSearchResultL
     private EditText searchEdit;
     private ListView routeLineListView;
     private String busLineId; //公交ID
-    private TextView routeLineNameText, routeLineStartTimeText, routeLineEndTimeAndStationCountText; //线路名字, 线路开始时间，线路结束时间和站点数量
+    private TextView routeLineNameText, routeLineStartTimeText, routeLineEndTimeAndStationCountText; //线路名字, 线路开始时间，线路结束时间和站点数量,点击按钮搜索线路
     private LinearLayout timeAndStationCountLinearLayout; //时间和车站数量布局linarlayout
     private ImageView deleteSearchImage; //清空搜索内容
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = getLayoutInflater(getArguments()).inflate(R.layout.activity_main_route, null);
         searchEdit = (EditText) view.findViewById(R.id.edit_route_line_search); //搜索框
-        searchEdit.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                String addressKeyword = searchEdit.getText().toString();
-                if(!TextUtils.isEmpty(addressKeyword)) {
-                    deleteSearchImage.setVisibility(View.VISIBLE);
-                    mSearch.searchInCity((new PoiCitySearchOption()).city(getResources().getString(R.string.search_city)).keyword(addressKeyword));
-                } else {
-                    deleteSearchImage.setVisibility(View.GONE);
-                }
-            }
-        });
         routeLineNameText = (TextView) view.findViewById(R.id.text_route_line_name); //线路名
         routeLineStartTimeText = (TextView) view.findViewById(R.id.text_route_line_start_time); //线路开始时间和站点数量
         routeLineEndTimeAndStationCountText = (TextView) view.findViewById(R.id.text_route_line_end_time_station_count); //线路结束时间和站点数量
@@ -85,6 +77,21 @@ public class RouteFragment extends Fragment implements OnGetBusLineSearchResultL
         return view;
     }
 
+
+    public void onEventMainThread(EventType eventType) {
+        switch (eventType.getType()){
+            //点击搜索按钮
+            case Const.EVENTBUS_EVENT_TYPE_FIVE:
+                String addressKeyword = searchEdit.getText().toString();
+                if(!TextUtils.isEmpty(addressKeyword)) {
+                    deleteSearchImage.setVisibility(View.VISIBLE);
+                    mSearch.searchInCity((new PoiCitySearchOption()).city(getResources().getString(R.string.search_city)).keyword(addressKeyword));
+                } else {
+                    deleteSearchImage.setVisibility(View.GONE);
+                }
+                break;
+        }
+    }
     @Override
     public void onGetBusLineResult(BusLineResult busLineResult) {
         if (busLineResult == null || busLineResult.error != SearchResult.ERRORNO.NO_ERROR || getActivity() == null) {
@@ -119,6 +126,5 @@ public class RouteFragment extends Fragment implements OnGetBusLineSearchResultL
 
     @Override
     public void onGetPoiDetailResult(PoiDetailResult poiDetailResult) {
-
     }
 }

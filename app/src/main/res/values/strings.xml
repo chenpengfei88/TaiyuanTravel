@@ -36,4 +36,6 @@
 
     <!-- 线路 -->
     <string name="string_route_line_search_hint">输入线路名 比如:807</string>
+    <!-- 站点 -->
+    <string name="string_station_search_hint">选择站点</string>
 </resources>

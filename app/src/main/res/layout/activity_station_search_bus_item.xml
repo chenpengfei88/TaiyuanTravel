@@ -1,0 +1,54 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/gray_color_two">
+
+    <TextView
+        android:id="@+id/text_route_line_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/gray_color_one"
+        android:textStyle="bold"
+        android:textSize="@dimen/text_typeface_size_two"
+        android:paddingLeft="@dimen/layout_padding_one"
+        android:paddingTop="@dimen/layout_padding_three"
+        android:paddingBottom="@dimen/layout_padding_three"
+        android:drawablePadding="@dimen/layout_padding_four"/>
+
+    <TextView
+        android:id="@+id/text_route_line_start_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/gray_color_one"
+        android:textSize="@dimen/text_typeface_size_three"
+        android:paddingLeft="@dimen/layout_padding_one"
+        android:paddingBottom="@dimen/layout_padding_three"
+        android:drawableLeft="@drawable/icon_line_bus_first"
+        android:drawablePadding="@dimen/layout_padding_four"
+        android:layout_below="@id/text_route_line_name"/>
+
+    <TextView
+        android:id="@+id/text_route_line_end_time_station_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/gray_color_one"
+        android:textSize="@dimen/text_typeface_size_three"
+        android:paddingLeft="@dimen/layout_padding_three"
+        android:paddingBottom="@dimen/layout_padding_three"
+        android:drawableLeft="@drawable/icon_line_bus_last"
+        android:drawablePadding="@dimen/layout_padding_four"
+        android:layout_marginLeft="@dimen/layout_padding_two"
+        android:layout_below="@id/text_route_line_name"
+        android:layout_toRightOf="@id/text_route_line_start_time"/>
+
+
+    <ImageView
+        android:id="@+id/image_station_bus_arrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/icon_down_arrow"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/layout_margin_three"/>
+</RelativeLayout>
