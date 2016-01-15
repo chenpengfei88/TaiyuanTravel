@@ -11,9 +11,10 @@
     <string name="tab_main_route">线路</string>
     <string name="edit_main_start_address_hint">输入起点</string>
     <string name="edit_main_start_address_location">正在定位...</string>
+    <string name="edit_main_start_address_location_fail">定位失败，请手动输入起点</string>
     <string name="edit_main_end_address_hint">输入终点</string>
     <string name="button_main_search">查询</string>
-    <string name="title_staion_programme">线路方案</string>
+    <string name="title_staion_programme">乘车方案</string>
     <string name="toast_no_result">抱歉，未能找到结果</string>
     <string name="search_city">太原市</string>
     <string name="title_station_programme">线路%s</string>
@@ -35,7 +36,9 @@
     </array>
 
     <!-- 线路 -->
-    <string name="string_route_line_search_hint">输入线路名 比如:807</string>
+    <string name="string_route_line_search_hint">输入线路名 比如:807路</string>
     <!-- 站点 -->
-    <string name="string_station_search_hint">选择站点</string>
+    <string name="string_station_search_hint">输入站点名 比如:财大北校公交车站</string>
+    <string name="string_station_bus">公交车站</string>
+    <string name="string_station_search_error">抱歉，未能找%s相关的公交线路</string>
 </resources>

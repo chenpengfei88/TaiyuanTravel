@@ -26,6 +26,9 @@
             android:layout_height="wrap_content"
             android:src="@drawable/icon_delete"
             android:layout_gravity="center_vertical"
+            android:visibility="gone"
+            android:clickable="true"
+            android:onClick="btnClick"
             android:layout_marginRight="@dimen/layout_margin_four"/>
     </LinearLayout>
 

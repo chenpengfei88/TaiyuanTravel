@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 import com.chenpengfei.taiyuantravel.pojo.StationProgramme;
 import com.chenpengfei.taiyuantravel.R;
@@ -67,9 +68,11 @@ public class StationProgrammeExpandableAdapter extends BaseExpandableListAdapter
         if(convertView == null){
             convertView = lf.inflate(R.layout.activity_station_programme_title_item, null);
         }
-        ((TextView)convertView.findViewById(R.id.text_main_title_station_programme)).setText(((StationProgramme)getGroup(groupPosition)).getProgrammeName()); //公交线路名
-        ((TextView)convertView.findViewById(R.id.text_main_title_station_time)).setText(context.getResources().getString(R.string.title_station_time, ((StationProgramme) getGroup(groupPosition)).getStationTime() / 60)); //耗时多久
-        ((TextView)convertView.findViewById(R.id.text_main_roule_line_bumber)).setText(groupPosition + 1 + "");
+        ((TextView) convertView.findViewById(R.id.text_main_title_station_programme)).setText(((StationProgramme)getGroup(groupPosition)).getProgrammeName()); //公交线路名
+        ((TextView) convertView.findViewById(R.id.text_main_title_station_time)).setText(context.getResources().getString(R.string.title_station_time, ((StationProgramme) getGroup(groupPosition)).getStationTime() / 60)); //耗时多久
+        ((TextView) convertView.findViewById(R.id.text_main_roule_line_bumber)).setText(groupPosition + 1 + "");
+        ImageView arrowImage = (ImageView) convertView.findViewById(R.id.image_main_route_line_arrow);
+        arrowImage.setImageResource(groupPosition == 0 ? R.drawable.icon_up_arrow : R.drawable.icon_down_arrow);
         return convertView;
     }
 

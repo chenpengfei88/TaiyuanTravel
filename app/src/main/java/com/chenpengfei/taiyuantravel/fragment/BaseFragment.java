@@ -49,6 +49,7 @@ public class BaseFragment extends Fragment {
      * @description 显示加载view
      */
     public void showLoadView(View view, Context context) {
+        if(context == null) return;
         if(loadRelativeLayout == null)
             loadRelativeLayout = (RelativeLayout) view.findViewById(R.id.relative_load);
         if(loadImage == null)

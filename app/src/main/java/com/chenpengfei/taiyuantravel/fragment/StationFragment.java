@@ -27,6 +27,7 @@ import com.baidu.mapapi.search.sug.SuggestionResult;
 import com.chenpengfei.taiyuantravel.R;
 import com.chenpengfei.taiyuantravel.activity.PoiAddressActivity;
 import com.chenpengfei.taiyuantravel.adapter.BusStationListExpandableAdapter;
+import com.chenpengfei.taiyuantravel.customview.CustomToast;
 import com.chenpengfei.taiyuantravel.pojo.EventType;
 import com.chenpengfei.taiyuantravel.util.Const;
 import com.ypy.eventbus.EventBus;
@@ -47,6 +48,7 @@ public class StationFragment extends BaseFragment implements OnGetBusLineSearchR
     private int busPosition = -1;
     private ArrayList<BusLineResult> busLineResultArrayList = new ArrayList<BusLineResult>(); //公交线路结果集合
     private ExpandableListView expandableListView;
+    private View view;
 
     private Handler mHandler = new Handler(){
         @Override
@@ -57,6 +59,7 @@ public class StationFragment extends BaseFragment implements OnGetBusLineSearchR
                 mmPoisearch.searchInCity((new PoiCitySearchOption()).city(getResources().getString(R.string.search_city)).keyword(busName));
             } else {
                 expandableListView.setAdapter(new BusStationListExpandableAdapter(getActivity().getLayoutInflater(), getActivity().getApplication(), busLineResultArrayList));
+                hideLoadView();
             }
         }
     };
@@ -75,7 +78,7 @@ public class StationFragment extends BaseFragment implements OnGetBusLineSearchR
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = getLayoutInflater(getArguments()).inflate(R.layout.activity_main_station, null);
+        view = getLayoutInflater(getArguments()).inflate(R.layout.activity_main_station, null);
         searchStationText = (TextView) view.findViewById(R.id.text_station_search);
         expandableListView = (ExpandableListView) view.findViewById(R.id.expandable_station_bus_list);
         expandableListView.setGroupIndicator(null);
@@ -85,7 +88,7 @@ public class StationFragment extends BaseFragment implements OnGetBusLineSearchR
             public void onGroupExpand(int i) {
                 View view = expandableListView.getChildAt(i);
                 if(view!=null){
-                    ImageView arrowImageView = (ImageView) view.findViewById(R.id.image_main_route_line_arrow);
+                    ImageView arrowImageView = (ImageView) view.findViewById(R.id.image_station_bus_arrow);
                     if(arrowImageView!=null){
                         arrowImageView.setImageResource(R.drawable.icon_up_arrow);
                     }
@@ -98,7 +101,7 @@ public class StationFragment extends BaseFragment implements OnGetBusLineSearchR
             public void onGroupCollapse(int i) {
                 View view = expandableListView.getChildAt(i);
                 if (view != null) {
-                    ImageView arrowImageView = (ImageView) view.findViewById(R.id.image_main_route_line_arrow);
+                    ImageView arrowImageView = (ImageView) view.findViewById(R.id.image_station_bus_arrow);
                     if (arrowImageView != null) {
                         arrowImageView.setImageResource(R.drawable.icon_down_arrow);
                     }
@@ -118,7 +121,7 @@ public class StationFragment extends BaseFragment implements OnGetBusLineSearchR
 
         public void onGetPoiResult(PoiResult result){
             if(result == null || result.getAllPoi() == null) {
-                Toast.makeText(getActivity(), "ij", Toast.LENGTH_SHORT).show();
+                CustomToast.makeText(getActivity(), getString(R.string.string_station_search_error, searchStationText.getText().toString()), Toast.LENGTH_SHORT).show();
                 return;
             }
             //遍历所有POI，找到类型为站点的POI
@@ -135,6 +138,9 @@ public class StationFragment extends BaseFragment implements OnGetBusLineSearchR
                 if(busArray.length > 0) {
                     mHandler.sendEmptyMessage(0);
                 }
+            } else {
+                hideLoadView();
+                CustomToast.makeText(getActivity(), getString(R.string.string_station_search_error, searchStationText.getText().toString()), Toast.LENGTH_SHORT).show();
             }
         }
         public void onGetPoiDetailResult(PoiDetailResult result){
@@ -185,6 +191,7 @@ public class StationFragment extends BaseFragment implements OnGetBusLineSearchR
         if(requestCode == Const.MAIN_SEARCH_ADDRESS_RESULT_REQUEST_THREE && resultCode == Const.MAIN_SEARCH_ADDRESS_RESULT_REQUEST_THREE) {
             SuggestionResult.SuggestionInfo suggestionInfo = (SuggestionResult.SuggestionInfo) data.getParcelableExtra("suggestionsInfo");
             searchStationText.setText(suggestionInfo.key);
+            showLoadView(view, getActivity());
             mPoiSearch.searchInCity((new PoiCitySearchOption()).city(getResources().getString(R.string.search_city)).keyword(suggestionInfo.key));
         }
         super.onActivityResult(requestCode, resultCode, data);

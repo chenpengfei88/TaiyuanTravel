@@ -25,5 +25,7 @@ public interface Const {
 
     public static int EVENTBUS_EVENT_TYPE_SIX = 6;
 
+    public static int EVENTBUS_EVENT_TYPE_SEVEN = 7;
+
 
 }

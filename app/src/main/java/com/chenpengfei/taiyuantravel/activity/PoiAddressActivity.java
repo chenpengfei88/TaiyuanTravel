@@ -8,6 +8,7 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 import com.baidu.mapapi.search.sug.OnGetSuggestionResultListener;
@@ -32,6 +33,7 @@ public class PoiAddressActivity extends BaseActionBarActivity {
     private EditText searchAddressEdit;
     private View actionBarSearchView;
     private SuggestionSearch mSuggestionSearch;
+    private ImageView deleteImage;
 
     @Override
     protected void onCreateActivity(Bundle savedInstanceState) {
@@ -45,6 +47,7 @@ public class PoiAddressActivity extends BaseActionBarActivity {
         toolBarAddView(actionBarSearchView);
         poiAddressListView = (ListView) findViewById(R.id.list_main_search_address);
         searchAddressEdit = (EditText) actionBarSearchView.findViewById(R.id.edit_main_search);
+        deleteImage = (ImageView) actionBarSearchView.findViewById(R.id.image_main_delete);
         searchAddressEdit.addTextChangedListener(new TextWatcher(){
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -56,9 +59,12 @@ public class PoiAddressActivity extends BaseActionBarActivity {
             public void afterTextChanged(Editable editable) {
                 String addressKeyword = searchAddressEdit.getText().toString();
                 if(!TextUtils.isEmpty(addressKeyword)) {
+                    deleteImage.setVisibility(View.VISIBLE);
                     if(!addressKeyword.contains(getStringContent(R.string.search_city)))
                         addressKeyword = getStringContent(R.string.search_city) + addressKeyword;
                     mSuggestionSearch.requestSuggestion((new SuggestionSearchOption()).keyword(addressKeyword).city(getStringContent(R.string.search_city)));
+                } else {
+                    deleteImage.setVisibility(View.GONE);
                 }
             }
         });
@@ -97,5 +103,12 @@ public class PoiAddressActivity extends BaseActionBarActivity {
         }
     };
 
+    public void btnClick(View v) {
+        switch (v.getId()){
+            case R.id.image_main_delete:
+                searchAddressEdit.setText("");
+                break;
+        }
+    }
 
 }

@@ -1,8 +1,9 @@
 package com.chenpengfei.taiyuantravel.fragment;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,7 @@ import com.chenpengfei.taiyuantravel.R;
 import com.chenpengfei.taiyuantravel.adapter.BusStationListAdapter;
 import com.chenpengfei.taiyuantravel.customview.CustomToast;
 import com.chenpengfei.taiyuantravel.pojo.EventType;
+import com.chenpengfei.taiyuantravel.util.CommonUtil;
 import com.chenpengfei.taiyuantravel.util.Const;
 import com.chenpengfei.taiyuantravel.util.DateUtils;
 import com.ypy.eventbus.EventBus;
@@ -65,6 +67,24 @@ public class RouteFragment extends BaseFragment implements OnGetBusLineSearchRes
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = getLayoutInflater(getArguments()).inflate(R.layout.activity_main_route, null);
         searchEdit = (EditText) view.findViewById(R.id.edit_route_line_search); //搜索框
+        searchEdit.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if(!TextUtils.isEmpty(searchEdit.getText().toString())) {
+                    deleteSearchImage.setVisibility(View.VISIBLE);
+                } else {
+                    deleteSearchImage.setVisibility(View.GONE);
+                }
+            }
+        });
         routeLineNameText = (TextView) view.findViewById(R.id.text_route_line_name); //线路名
         routeLineStartTimeText = (TextView) view.findViewById(R.id.text_route_line_start_time); //线路开始时间和站点数量
         routeLineEndTimeAndStationCountText = (TextView) view.findViewById(R.id.text_route_line_end_time_station_count); //线路结束时间和站点数量
@@ -87,10 +107,15 @@ public class RouteFragment extends BaseFragment implements OnGetBusLineSearchRes
                 if(!TextUtils.isEmpty(addressKeyword)) {
                     deleteSearchImage.setVisibility(View.VISIBLE);
                     showLoadView(view, getActivity());
+                    CommonUtil.hideSoftInputWindow(getActivity());
                     mSearch.searchInCity((new PoiCitySearchOption()).city(getResources().getString(R.string.search_city)).keyword(addressKeyword));
                 } else {
                     deleteSearchImage.setVisibility(View.GONE);
                 }
+                break;
+            //清空图标按钮事件
+            case Const.EVENTBUS_EVENT_TYPE_SEVEN:
+                searchEdit.setText("");
                 break;
         }
     }

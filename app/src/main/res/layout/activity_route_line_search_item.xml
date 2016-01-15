@@ -12,9 +12,12 @@
         android:layout_centerVertical="true"
         android:background="@drawable/style_main_roult_line_number_bg"
         android:textColor="@android:color/white"
+        android:textSize="@dimen/text_typeface_size_five"
         android:layout_marginLeft="@dimen/layout_margin_two"
-        android:paddingLeft="@dimen/layout_padding_four"
-        android:paddingRight="@dimen/layout_padding_four"/>
+        android:paddingLeft="3dp"
+        android:paddingRight="3dp"
+        android:paddingTop="1dp"
+        android:paddingBottom="1dp"/>
 
     <TextView
         android:id="@+id/text_route_line_search_content"

@@ -7,13 +7,20 @@
 
     <include layout="@layout/activity_toolbar"/>
 
-    <ExpandableListView
-        android:id="@+id/expandable_main_station_programme"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:listSelector="@android:color/transparent"
-        android:fadingEdge="@null"
-        android:divider="@color/gray_color_three"
-        android:dividerHeight="1px"/>
+        android:layout_height="match_parent">
 
+        <ExpandableListView
+            android:id="@+id/expandable_main_station_programme"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:listSelector="@android:color/transparent"
+            android:fadingEdge="@null"
+            android:divider="@color/gray_color_three"
+            android:dividerHeight="1px"/>
+
+        <include layout="@layout/activity_load"
+            />
+    </RelativeLayout>
 </LinearLayout>

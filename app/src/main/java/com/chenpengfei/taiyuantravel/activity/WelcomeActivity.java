@@ -2,6 +2,10 @@ package com.chenpengfei.taiyuantravel.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
+
 import com.chenpengfei.taiyuantravel.R;
 
 /**
@@ -12,11 +16,32 @@ import com.chenpengfei.taiyuantravel.R;
  */
 public class WelcomeActivity extends BaseActivity {
 
+    private ImageView logoImage;
+
     @Override
     protected void onCreateActivity(Bundle savedInstanceState) {
         setContentView(R.layout.activity_welcome);
-        startActivity(new Intent(WelcomeActivity.this, MainActivity.class));
-        finish();
+        logoImage = (ImageView) findViewById(R.id.image_logo);
+        Animation animation = AnimationUtils.loadAnimation(this, R.anim.image_welcome_scale_alpha);
+        logoImage.startAnimation(animation);
+        animation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                startActivity(new Intent(WelcomeActivity.this, MainActivity.class));
+                overridePendingTransition(R.anim.main_scale_in, R.anim.welcome_alpha_out);
+                finish();
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
     }
 
 

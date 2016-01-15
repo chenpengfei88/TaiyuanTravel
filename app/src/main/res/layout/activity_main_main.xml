@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:background="@color/gray_color_three"
-        android:layout_marginTop="@dimen/layout_margin_three"/>
+        android:layout_marginTop="@dimen/layout_margin_five"/>
 
     <RelativeLayout
         android:layout_width="match_parent"

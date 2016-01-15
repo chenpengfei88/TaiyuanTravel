@@ -50,7 +50,8 @@ public class BusStationListAdapter extends BaseAdapter {
         }
         BusLineResult.BusStation busStation = (BusLineResult.BusStation) getItem(i);
         ((TextView) view.findViewById(R.id.text_route_line_search_content)).setText(busStation.getTitle());
-        ((TextView) view.findViewById(R.id.text_roule_line_bumber)).setText(i + 1 + "");
+        int position = i + 1;
+        ((TextView) view.findViewById(R.id.text_roule_line_bumber)).setText(position > 9 ? "" + position : "0" + position);
         return view;
     }
 }

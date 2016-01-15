@@ -1,5 +1,12 @@
 package com.chenpengfei.taiyuantravel.util;
 
+import android.app.Activity;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -24,5 +31,40 @@ public class CommonUtil {
             return false;
         }
         return true;
+    }
+
+    /**
+     *
+     * @param context
+     * @return boolean
+     * @description 检查是否有网络
+     */
+    public static boolean isNetworkAvailable(Context context) {
+        if (null == context)
+            return false;
+         ConnectivityManager connec = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+         NetworkInfo mobileInfo = connec.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+         NetworkInfo wifiInfo = connec.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+         NetworkInfo wimaxInfo = connec.getNetworkInfo(ConnectivityManager.TYPE_WIMAX);
+
+        boolean connected = (null != wimaxInfo && wimaxInfo.isConnectedOrConnecting());
+        if (!connected)
+            connected = (null != mobileInfo && mobileInfo.isConnectedOrConnecting());
+        if (!connected)
+            connected = (null != wifiInfo && wifiInfo.isConnectedOrConnecting());
+        if (!connected) {
+        }
+        return connected;
+    }
+
+    /**
+     *
+     * @param activity
+     * @description 隐藏键盘
+     */
+    public static void hideSoftInputWindow(Activity activity) {
+        if (activity == null || activity.getCurrentFocus() == null) return;
+        ((InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE)).
+                hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
     }
 }

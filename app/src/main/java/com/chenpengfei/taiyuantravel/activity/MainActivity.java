@@ -50,6 +50,7 @@ public class MainActivity extends BaseActivity {
             fragmentArrayList.add(new StationFragment());
             fragmentArrayList.add(new RouteFragment());
         }
+        contentViewPager.setOffscreenPageLimit(2); //预先加载2个fragment
         contentViewPager.setAdapter(new NavigationBarAdapter(fragmentManager, fragmentArrayList));
         contentViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() { //page滑动改变
             @Override
@@ -117,6 +118,9 @@ public class MainActivity extends BaseActivity {
             case R.id.text_station_search: //选择站点
                 EventBus.getDefault().post(new EventType(Const.EVENTBUS_EVENT_TYPE_SIX));
                 break;
+            case R.id.image_route_line_search_delete: //线路清空icon
+                EventBus.getDefault().post(new EventType(Const.EVENTBUS_EVENT_TYPE_SEVEN));
+                break;
 
         }
     }
@@ -125,13 +129,13 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-//        if(fragmentArrayList == null || fragmentArrayList.size() == 0) return;
-//        for (int i = 0; i < TAB_COUNT; i++) {
-//            Fragment fragment = fragmentArrayList.get(i);
-//            if (fragment != null) {
-//                fragmentManager.putFragment(outState, "fragment" + i, fragment);
-//            }
-//        }
+        if(fragmentArrayList == null || fragmentArrayList.size() == 0) return;
+        for (int i = 0; i < TAB_COUNT; i++) {
+            Fragment fragment = fragmentArrayList.get(i);
+            if (fragment != null) {
+                fragmentManager.putFragment(outState, "fragment" + i, fragment);
+            }
+        }
     }
 
     //如果activity不是在正常情况下被杀死就会调用onSaveInstanceState方法保存当前的fragment，然后重新创建activity的时候从outState中取出来

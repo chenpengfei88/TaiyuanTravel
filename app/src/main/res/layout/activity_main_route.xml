@@ -46,6 +46,8 @@
                 android:src="@drawable/icon_delete"
                 android:visibility="gone"
                 android:layout_gravity="center_vertical"
+                android:clickable="true"
+                android:onClick="btnClick"
                 android:layout_marginRight="@dimen/layout_margin_three"/>
         </LinearLayout>
 

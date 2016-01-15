@@ -85,7 +85,8 @@ public class BusStationListExpandableAdapter extends BaseExpandableListAdapter {
         }
         BusLineResult.BusStation busStation = (BusLineResult.BusStation) getChild(groupPosition, childPosition);
         ((TextView) convertView.findViewById(R.id.text_route_line_search_content)).setText(busStation.getTitle());
-        ((TextView) convertView.findViewById(R.id.text_roule_line_bumber)).setText(childPosition + 1 + "");
+        int position = childPosition + 1;
+        ((TextView) convertView.findViewById(R.id.text_roule_line_bumber)).setText(position > 9 ? position + "" : "0" + position);
         return convertView;
     }
 

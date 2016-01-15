@@ -14,11 +14,13 @@ import android.widget.Toast;
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
+import com.baidu.mapapi.model.LatLng;
 import com.baidu.mapapi.search.sug.SuggestionResult;
 import com.chenpengfei.taiyuantravel.R;
 import com.chenpengfei.taiyuantravel.activity.PoiAddressActivity;
 import com.chenpengfei.taiyuantravel.activity.RouteLineActivity;
 import com.chenpengfei.taiyuantravel.customview.CustomToast;
+import com.chenpengfei.taiyuantravel.pojo.ChildSuggestionInfo;
 import com.chenpengfei.taiyuantravel.pojo.EventType;
 import com.chenpengfei.taiyuantravel.util.BaiduLocationUtil;
 import com.chenpengfei.taiyuantravel.util.Const;
@@ -60,6 +62,10 @@ public class MainFragment extends Fragment {
                 String addressStr = bdLocation.getAddrStr();
                 if(!TextUtils.isEmpty(addressStr)) {
                     startAddressText.setText(addressStr.replace(getResources().getString(R.string.tab_main_china), ""));
+                    startSuggestionInfo = new ChildSuggestionInfo(new LatLng(bdLocation.getLatitude(), bdLocation.getLongitude()), addressStr);
+                    startAddress = startSuggestionInfo.key;
+                } else {
+                    startAddressText.setText(getResources().getString(R.string.edit_main_start_address_location_fail));
                 }
             }
         }, getActivity().getApplicationContext());
@@ -86,7 +92,6 @@ public class MainFragment extends Fragment {
             case Const.EVENTBUS_EVENT_TYPE_THREE:
                 if(getActivity() == null || startSuggestionInfo == null || endSuggestionInfo == null || startSuggestionInfo.pt == null || endSuggestionInfo.pt == null) return;
                 Intent intentThree = new Intent(getActivity(), RouteLineActivity.class);
-                CustomToast.makeText(getActivity(), "start=" + startSuggestionInfo.key +"=====end==" + endSuggestionInfo.key, Toast.LENGTH_SHORT).show();
                 //地址经纬度
                 intentThree.putExtra("start_address_lat", startSuggestionInfo.pt);
                 intentThree.putExtra("end_address_lat",  endSuggestionInfo.pt);
@@ -168,5 +173,9 @@ public class MainFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-
+    @Override
+    public void onDestroyView() {
+        BaiduLocationUtil.mLocationClient.stop();
+        super.onDestroyView();
+    }
 }

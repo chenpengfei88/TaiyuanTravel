@@ -1,5 +1,6 @@
 package com.chenpengfei.taiyuantravel.activity;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
@@ -8,6 +9,11 @@ import android.text.SpannableStringBuilder;
 import android.text.style.AbsoluteSizeSpan;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+
 import com.baidu.mapapi.SDKInitializer;
 import com.chenpengfei.taiyuantravel.R;
 
@@ -19,11 +25,39 @@ import com.chenpengfei.taiyuantravel.R;
  */
 public class BaseActionBarActivity extends ActionBarActivity {
 
+    private RelativeLayout loadRelativeLayout;
+    private ImageView loadImage;
+    private Animation animation;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SDKInitializer.initialize(getApplicationContext());
         onCreateActivity(savedInstanceState);
+    }
+
+    /**
+     *
+     * @param context
+     * @description 显示加载view
+     */
+    public void showLoadView(Context context) {
+        if(context == null) return;
+        if(loadRelativeLayout == null)
+            loadRelativeLayout = (RelativeLayout) findViewById(R.id.relative_load);
+        if(loadImage == null)
+            loadImage = (ImageView) findViewById(R.id.image_load);
+        loadRelativeLayout.setVisibility(View.VISIBLE);
+        animation = AnimationUtils.loadAnimation(context, R.anim.image_load_rotate);
+        loadImage.startAnimation(animation);
+    }
+
+    public void hideLoadView() {
+        if(loadRelativeLayout != null)
+            loadRelativeLayout.setVisibility(View.GONE);
+        if(loadImage != null && animation != null && !animation.hasEnded()) {
+            animation.cancel();
+        }
     }
 
     /**
