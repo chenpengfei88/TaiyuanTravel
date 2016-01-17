@@ -54,6 +54,32 @@ public class RouteLineActivity extends BaseActionBarActivity implements OnGetRou
         endNode = PlanNode.withLocation(endLatLng);
         stationProgrammeExpandableListView = (ExpandableListView) findViewById(R.id.expandable_main_station_programme);
         stationProgrammeExpandableListView.setGroupIndicator(null);
+        //listview展开事件
+        stationProgrammeExpandableListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
+            @Override
+            public void onGroupExpand(int i) {
+                View view = stationProgrammeExpandableListView.getChildAt(i);
+                if (view != null) {
+                    ImageView arrowImageView = (ImageView) view.findViewById(R.id.image_main_route_line_arrow);
+                    if (arrowImageView != null) {
+                        arrowImageView.setImageResource(R.drawable.icon_up_arrow);
+                    }
+                }
+            }
+        });
+        //listview合闭事件
+        stationProgrammeExpandableListView.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
+            @Override
+            public void onGroupCollapse(int i) {
+                View view = stationProgrammeExpandableListView.getChildAt(i);
+                if (view != null) {
+                    ImageView arrowImageView = (ImageView) view.findViewById(R.id.image_main_route_line_arrow);
+                    if (arrowImageView != null) {
+                        arrowImageView.setImageResource(R.drawable.icon_down_arrow);
+                    }
+                }
+            }
+        });
     }
 
     private void initMapSearch() {
@@ -104,33 +130,6 @@ public class RouteLineActivity extends BaseActionBarActivity implements OnGetRou
                 stationProgrammeArrayList.add(stationProgramme);
             }
             stationProgrammeExpandableListView.setAdapter(new StationProgrammeExpandableAdapter(getLayoutInflater(), this, stationProgrammeArrayList));
-            //listview展开事件
-            stationProgrammeExpandableListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
-                @Override
-                public void onGroupExpand(int i) {
-                    View view = stationProgrammeExpandableListView.getChildAt(i);
-                    if(view!=null){
-                        ImageView arrowImageView = (ImageView) view.findViewById(R.id.image_main_route_line_arrow);
-                        if(arrowImageView!=null){
-                            arrowImageView.setImageResource(R.drawable.icon_up_arrow);
-                        }
-                    }
-                }
-            });
-            //listview合闭事件
-            stationProgrammeExpandableListView.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
-                @Override
-                public void onGroupCollapse(int i) {
-                    View view = stationProgrammeExpandableListView.getChildAt(i);
-                    if (view != null) {
-                        ImageView arrowImageView = (ImageView) view.findViewById(R.id.image_main_route_line_arrow);
-                        if (arrowImageView != null) {
-                            arrowImageView.setImageResource(R.drawable.icon_down_arrow);
-                        }
-                    }
-                }
-            });
-            if(stationProgrammeArrayList.size() > 0) stationProgrammeExpandableListView.expandGroup(0);
             hideLoadView();
         }
     }

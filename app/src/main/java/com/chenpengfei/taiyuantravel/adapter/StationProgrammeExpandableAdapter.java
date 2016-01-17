@@ -69,10 +69,14 @@ public class StationProgrammeExpandableAdapter extends BaseExpandableListAdapter
             convertView = lf.inflate(R.layout.activity_station_programme_title_item, null);
         }
         ((TextView) convertView.findViewById(R.id.text_main_title_station_programme)).setText(((StationProgramme)getGroup(groupPosition)).getProgrammeName()); //公交线路名
-        ((TextView) convertView.findViewById(R.id.text_main_title_station_time)).setText(context.getResources().getString(R.string.title_station_time, ((StationProgramme) getGroup(groupPosition)).getStationTime() / 60)); //耗时多久
+        int minutes = ((StationProgramme) getGroup(groupPosition)).getStationTime() / 60;
+        String time = context.getResources().getString(R.string.title_station_time, minutes);
+        if(minutes > 60) {
+            int hour = minutes / 60;
+            time = context.getResources().getString(R.string.title_station_hour_time, hour, (minutes - hour * 60));
+        }
+        ((TextView) convertView.findViewById(R.id.text_main_title_station_time)).setText(time+minutes); //耗时多久
         ((TextView) convertView.findViewById(R.id.text_main_roule_line_bumber)).setText(groupPosition + 1 + "");
-        ImageView arrowImage = (ImageView) convertView.findViewById(R.id.image_main_route_line_arrow);
-        arrowImage.setImageResource(groupPosition == 0 ? R.drawable.icon_up_arrow : R.drawable.icon_down_arrow);
         return convertView;
     }
 

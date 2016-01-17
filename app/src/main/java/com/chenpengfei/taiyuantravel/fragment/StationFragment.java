@@ -2,21 +2,15 @@ package com.chenpengfei.taiyuantravel.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ExpandableListView;
-import android.widget.ImageView;
+import android.widget.ArrayAdapter;
+import android.widget.GridView;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.baidu.mapapi.search.busline.BusLineResult;
-import com.baidu.mapapi.search.busline.BusLineSearch;
-import com.baidu.mapapi.search.busline.BusLineSearchOption;
-import com.baidu.mapapi.search.busline.OnGetBusLineSearchResultListener;
 import com.baidu.mapapi.search.core.PoiInfo;
 import com.baidu.mapapi.search.poi.OnGetPoiSearchResultListener;
 import com.baidu.mapapi.search.poi.PoiCitySearchOption;
@@ -26,12 +20,16 @@ import com.baidu.mapapi.search.poi.PoiSearch;
 import com.baidu.mapapi.search.sug.SuggestionResult;
 import com.chenpengfei.taiyuantravel.R;
 import com.chenpengfei.taiyuantravel.activity.PoiAddressActivity;
-import com.chenpengfei.taiyuantravel.adapter.BusStationListExpandableAdapter;
 import com.chenpengfei.taiyuantravel.customview.CustomToast;
 import com.chenpengfei.taiyuantravel.pojo.EventType;
 import com.chenpengfei.taiyuantravel.util.Const;
 import com.ypy.eventbus.EventBus;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 /**
  *  @copyright  陈鹏飞
@@ -39,30 +37,14 @@ import java.util.ArrayList;
  *  @email 450032215@qq.com
  *  @description 显示站点内容的fragment
  */
-public class StationFragment extends BaseFragment implements OnGetBusLineSearchResultListener {
+public class StationFragment extends BaseFragment {
 
-    private PoiSearch mPoiSearch, mmPoisearch;
+    private PoiSearch mPoiSearch;
     private TextView searchStationText;
-    private BusLineSearch mBusLineSearch = null;
     private String[] busArray;
-    private int busPosition = -1;
-    private ArrayList<BusLineResult> busLineResultArrayList = new ArrayList<BusLineResult>(); //公交线路结果集合
-    private ExpandableListView expandableListView;
     private View view;
+    private GridView busNameGridView;
 
-    private Handler mHandler = new Handler(){
-        @Override
-        public void handleMessage(Message msg) {
-            busPosition += 1;
-            if(busPosition < busArray.length) {
-                String busName = busArray[busPosition];
-                mmPoisearch.searchInCity((new PoiCitySearchOption()).city(getResources().getString(R.string.search_city)).keyword(busName));
-            } else {
-                expandableListView.setAdapter(new BusStationListExpandableAdapter(getActivity().getLayoutInflater(), getActivity().getApplication(), busLineResultArrayList));
-                hideLoadView();
-            }
-        }
-    };
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -80,40 +62,9 @@ public class StationFragment extends BaseFragment implements OnGetBusLineSearchR
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = getLayoutInflater(getArguments()).inflate(R.layout.activity_main_station, null);
         searchStationText = (TextView) view.findViewById(R.id.text_station_search);
-        expandableListView = (ExpandableListView) view.findViewById(R.id.expandable_station_bus_list);
-        expandableListView.setGroupIndicator(null);
-        //listview展开事件
-        expandableListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
-            @Override
-            public void onGroupExpand(int i) {
-                View view = expandableListView.getChildAt(i);
-                if(view!=null){
-                    ImageView arrowImageView = (ImageView) view.findViewById(R.id.image_station_bus_arrow);
-                    if(arrowImageView!=null){
-                        arrowImageView.setImageResource(R.drawable.icon_up_arrow);
-                    }
-                }
-            }
-        });
-        //listview合闭事件
-        expandableListView.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
-            @Override
-            public void onGroupCollapse(int i) {
-                View view = expandableListView.getChildAt(i);
-                if (view != null) {
-                    ImageView arrowImageView = (ImageView) view.findViewById(R.id.image_station_bus_arrow);
-                    if (arrowImageView != null) {
-                        arrowImageView.setImageResource(R.drawable.icon_down_arrow);
-                    }
-                }
-            }
-        });
+        busNameGridView = (GridView) view.findViewById(R.id.grid_station_bus_name);
         mPoiSearch = PoiSearch.newInstance();
-        mmPoisearch = PoiSearch.newInstance();
         mPoiSearch.setOnGetPoiSearchResultListener(poiListener);
-        mmPoisearch.setOnGetPoiSearchResultListener(mpoiListener);
-        mBusLineSearch = BusLineSearch.newInstance();
-        mBusLineSearch.setOnGetBusLineSearchResultListener(this);
         return  view;
     }
 
@@ -136,7 +87,15 @@ public class StationFragment extends BaseFragment implements OnGetBusLineSearchR
             if(!TextUtils.isEmpty(busStr)) {
                 busArray = busStr.split(";");
                 if(busArray.length > 0) {
-                    mHandler.sendEmptyMessage(0);
+                    List<Map<String, Object>> busList = new ArrayList<Map<String, Object>>();
+                    for(String busName : busArray) {
+                        Map<String,Object> busHashMap = new HashMap<String,Object>();
+                        busHashMap.put("bus_name", busName);
+                        busList.add(busHashMap);
+                    }
+                    SimpleAdapter simpleAdapter = new SimpleAdapter(getActivity(), busList, R.layout.activity_station_search_bus_item, new String[]{ "bus_name"}, new int[]{R.id.text_station_bus_item_name});
+                    busNameGridView.setAdapter(simpleAdapter);
+                    hideLoadView();
                 }
             } else {
                 hideLoadView();
@@ -147,30 +106,6 @@ public class StationFragment extends BaseFragment implements OnGetBusLineSearchR
         }
     };
 
-    OnGetPoiSearchResultListener mpoiListener = new OnGetPoiSearchResultListener(){
-
-        public void onGetPoiResult(PoiResult result){
-            if(result == null || result.getAllPoi() == null) {
-                mHandler.sendEmptyMessage(0);
-                return;
-            }
-            String busLineId = "";
-            for (PoiInfo poi : result.getAllPoi()) {
-                if (poi.type == PoiInfo.POITYPE.BUS_LINE  || poi.type == PoiInfo.POITYPE.SUBWAY_LINE) {
-                    //说明该条POI为公交信息
-                    busLineId = poi.uid;
-                    break;
-                }
-            }
-            if(!TextUtils.isEmpty(busLineId)) {
-                mBusLineSearch.searchBusLine((new BusLineSearchOption().city(getResources().getString(R.string.search_city)).uid(busLineId)));
-            } else {
-                mHandler.sendEmptyMessage(0);
-            }
-        }
-        public void onGetPoiDetailResult(PoiDetailResult result){
-        }
-    };
 
     public void onEventMainThread(EventType eventType) {
         switch (eventType.getType()){
@@ -197,9 +132,4 @@ public class StationFragment extends BaseFragment implements OnGetBusLineSearchR
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    @Override
-    public void onGetBusLineResult(BusLineResult busLineResult) {
-        busLineResultArrayList.add(busLineResult);
-        mHandler.sendEmptyMessage(0);
-    }
 }

@@ -47,14 +47,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ExpandableListView
-            android:id="@+id/expandable_station_bus_list"
+        <GridView
+            android:id="@+id/grid_station_bus_name"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:listSelector="@android:color/transparent"
-            android:fadingEdge="@null"
-            android:divider="@color/gray_color_three"
-            android:dividerHeight="1px"/>
+            android:numColumns="3"
+            android:fadingEdge="@null"/>
 
         <include layout="@layout/activity_load"
             />
