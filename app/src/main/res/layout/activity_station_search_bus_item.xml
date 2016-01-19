@@ -2,18 +2,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@drawable/selector_list_onclick_item_bg">
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/icon_taiyuan_travel"
-        android:layout_gravity="center_horizontal"/>
+        android:src="@drawable/icon_line_bus"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/layout_margin_four"/>
 
     <TextView
         android:id="@+id/text_station_bus_item_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"/>
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/layout_margin_five"
+        android:paddingBottom="@dimen/layout_padding_five"
+        android:textSize="@dimen/text_typeface_size_three"
+        android:textStyle="bold"/>
 
 </LinearLayout>

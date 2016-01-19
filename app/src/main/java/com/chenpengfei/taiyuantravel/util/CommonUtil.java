@@ -2,10 +2,16 @@ package com.chenpengfei.taiyuantravel.util;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Toast;
+
+import com.chenpengfei.taiyuantravel.R;
+import com.chenpengfei.taiyuantravel.customview.CustomToast;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -17,6 +23,25 @@ import java.util.regex.Pattern;
  *  @description  工具类
  */
 public class CommonUtil {
+
+    // 屏幕的宽参数
+    public static int screenWidth;
+    public static float screenDensity;
+    // 屏幕的宽参数
+    public static int screenHeight;
+
+    /**
+     *
+     * @Description描述:初始化屏幕信息
+     * @return void
+     */
+    public static void initScreeenInfomation(Resources resources) {
+        DisplayMetrics dm = new DisplayMetrics();
+        dm = resources.getDisplayMetrics();
+        screenWidth = dm.widthPixels;
+        screenHeight = dm.heightPixels;
+        screenDensity = dm.density;
+    }
 
     /**
      *
@@ -42,17 +67,17 @@ public class CommonUtil {
     public static boolean isNetworkAvailable(Context context) {
         if (null == context)
             return false;
-         ConnectivityManager connec = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-         NetworkInfo mobileInfo = connec.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
-         NetworkInfo wifiInfo = connec.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-         NetworkInfo wimaxInfo = connec.getNetworkInfo(ConnectivityManager.TYPE_WIMAX);
-
+         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+         NetworkInfo mobileInfo = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+         NetworkInfo wifiInfo = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+         NetworkInfo wimaxInfo = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIMAX);
         boolean connected = (null != wimaxInfo && wimaxInfo.isConnectedOrConnecting());
         if (!connected)
             connected = (null != mobileInfo && mobileInfo.isConnectedOrConnecting());
         if (!connected)
             connected = (null != wifiInfo && wifiInfo.isConnectedOrConnecting());
-        if (!connected) {
+        if(!connected) {
+            CustomToast.makeText(context, context.getString(R.string.tip_network_fail), Toast.LENGTH_SHORT).show();
         }
         return connected;
     }

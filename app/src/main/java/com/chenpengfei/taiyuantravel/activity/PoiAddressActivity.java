@@ -18,6 +18,8 @@ import com.baidu.mapapi.search.sug.SuggestionSearchOption;
 import com.chenpengfei.taiyuantravel.R;
 import com.chenpengfei.taiyuantravel.adapter.PoiAddressListAdapter;
 import com.chenpengfei.taiyuantravel.customview.CustomToast;
+import com.chenpengfei.taiyuantravel.util.CommonUtil;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,14 +59,16 @@ public class PoiAddressActivity extends BaseActionBarActivity {
             }
             @Override
             public void afterTextChanged(Editable editable) {
-                String addressKeyword = searchAddressEdit.getText().toString();
-                if(!TextUtils.isEmpty(addressKeyword)) {
-                    deleteImage.setVisibility(View.VISIBLE);
-                    if(!addressKeyword.contains(getStringContent(R.string.search_city)))
-                        addressKeyword = getStringContent(R.string.search_city) + addressKeyword;
-                    mSuggestionSearch.requestSuggestion((new SuggestionSearchOption()).keyword(addressKeyword).city(getStringContent(R.string.search_city)));
-                } else {
-                    deleteImage.setVisibility(View.GONE);
+                if(CommonUtil.isNetworkAvailable(PoiAddressActivity.this)) {
+                    String addressKeyword = searchAddressEdit.getText().toString();
+                    if(!TextUtils.isEmpty(addressKeyword)) {
+                        deleteImage.setVisibility(View.VISIBLE);
+                        if(!addressKeyword.contains(getStringContent(R.string.search_city)))
+                            addressKeyword = getStringContent(R.string.search_city) + addressKeyword;
+                        mSuggestionSearch.requestSuggestion((new SuggestionSearchOption()).keyword(addressKeyword).city(getStringContent(R.string.search_city)));
+                    } else {
+                        deleteImage.setVisibility(View.GONE);
+                    }
                 }
             }
         });

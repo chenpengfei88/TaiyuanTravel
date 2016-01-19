@@ -25,7 +25,7 @@ import java.util.ArrayList;
 public class MainActivity extends BaseActivity {
 
     private int TAB_COUNT = 3;
-    private ViewPager contentViewPager; //显示fragment内容viewpager
+    public ViewPager contentViewPager; //显示fragment内容viewpager
     private ArrayList<Fragment> fragmentArrayList = new ArrayList<Fragment>();
     private ArrayList<RadioButton> radioButtonArrayList = new ArrayList<RadioButton>();
     private FragmentManager fragmentManager;
@@ -147,4 +147,5 @@ public class MainActivity extends BaseActivity {
             }
         }
     }
+
 }

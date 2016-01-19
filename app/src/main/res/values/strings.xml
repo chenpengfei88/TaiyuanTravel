@@ -2,7 +2,8 @@
     <string name="app_name">太原公交</string>
 
     <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>\
+    <string name="action_settings">Settings</string>
+    <string name="tip_network_fail">网络不给力</string>
 
     <!-- 首页-->
     <string name="tab_main_china">中国</string>

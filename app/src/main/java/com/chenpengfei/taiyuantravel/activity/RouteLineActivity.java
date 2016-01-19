@@ -86,8 +86,10 @@ public class RouteLineActivity extends BaseActionBarActivity implements OnGetRou
         // 初始化搜索模块，注册事件监听
         mSearch = RoutePlanSearch.newInstance();
         mSearch.setOnGetRoutePlanResultListener(this);
-        showLoadView(this);
-        mSearch.transitSearch((new TransitRoutePlanOption()).from(startNode).city(getStringContent(R.string.search_city)).to(endNode));
+        if(CommonUtil.isNetworkAvailable(this)) {
+            showLoadView(this);
+            mSearch.transitSearch((new TransitRoutePlanOption()).from(startNode).city(getStringContent(R.string.search_city)).to(endNode));
+        }
     }
 
 
@@ -99,9 +101,8 @@ public class RouteLineActivity extends BaseActionBarActivity implements OnGetRou
     @Override
     public void onGetTransitRouteResult(TransitRouteResult transitRouteResult) {
         if (transitRouteResult == null || transitRouteResult.error != SearchResult.ERRORNO.NO_ERROR) {
+            hideLoadView();
             CustomToast.makeText(RouteLineActivity.this, getStringContent(R.string.toast_no_result), Toast.LENGTH_SHORT).show();
-        }
-        if (transitRouteResult.error == SearchResult.ERRORNO.AMBIGUOUS_ROURE_ADDR) {
             return;
         }
         if (transitRouteResult.error == SearchResult.ERRORNO.NO_ERROR) {

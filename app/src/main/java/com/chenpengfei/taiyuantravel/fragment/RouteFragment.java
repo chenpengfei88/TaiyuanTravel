@@ -103,6 +103,8 @@ public class RouteFragment extends BaseFragment implements OnGetBusLineSearchRes
         switch (eventType.getType()){
             //点击搜索按钮
             case Const.EVENTBUS_EVENT_TYPE_FIVE:
+                if(!TextUtils.isEmpty(eventType.getContent()))
+                    searchEdit.setText(eventType.getContent());
                 String addressKeyword = searchEdit.getText().toString();
                 if(!TextUtils.isEmpty(addressKeyword)) {
                     deleteSearchImage.setVisibility(View.VISIBLE);

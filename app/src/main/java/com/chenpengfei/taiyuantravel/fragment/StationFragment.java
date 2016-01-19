@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.SimpleAdapter;
@@ -19,9 +20,11 @@ import com.baidu.mapapi.search.poi.PoiResult;
 import com.baidu.mapapi.search.poi.PoiSearch;
 import com.baidu.mapapi.search.sug.SuggestionResult;
 import com.chenpengfei.taiyuantravel.R;
+import com.chenpengfei.taiyuantravel.activity.MainActivity;
 import com.chenpengfei.taiyuantravel.activity.PoiAddressActivity;
 import com.chenpengfei.taiyuantravel.customview.CustomToast;
 import com.chenpengfei.taiyuantravel.pojo.EventType;
+import com.chenpengfei.taiyuantravel.util.CommonUtil;
 import com.chenpengfei.taiyuantravel.util.Const;
 import com.ypy.eventbus.EventBus;
 
@@ -89,18 +92,27 @@ public class StationFragment extends BaseFragment {
                 if(busArray.length > 0) {
                     List<Map<String, Object>> busList = new ArrayList<Map<String, Object>>();
                     for(String busName : busArray) {
-                        Map<String,Object> busHashMap = new HashMap<String,Object>();
+                        Map<String, Object> busHashMap = new HashMap<String,Object>();
                         busHashMap.put("bus_name", busName);
                         busList.add(busHashMap);
                     }
                     SimpleAdapter simpleAdapter = new SimpleAdapter(getActivity(), busList, R.layout.activity_station_search_bus_item, new String[]{ "bus_name"}, new int[]{R.id.text_station_bus_item_name});
                     busNameGridView.setAdapter(simpleAdapter);
-                    hideLoadView();
+                    busNameGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                            if(getActivity() == null) return;
+                            MainActivity mainActivity = (MainActivity) getActivity();
+                            mainActivity.contentViewPager.setCurrentItem(2);
+                            mainActivity.setToolBarStyleByPosition(2);
+                            EventBus.getDefault().post(new EventType(Const.EVENTBUS_EVENT_TYPE_FIVE, busArray[i]));
+                        }
+                    });
                 }
             } else {
-                hideLoadView();
                 CustomToast.makeText(getActivity(), getString(R.string.string_station_search_error, searchStationText.getText().toString()), Toast.LENGTH_SHORT).show();
             }
+            hideLoadView();
         }
         public void onGetPoiDetailResult(PoiDetailResult result){
         }

@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:textColor="@android:color/white"
         android:id="@+id/content_tip_id"
-        android:textSize="@dimen/text_typeface_size_one"
+        android:textSize="@dimen/text_typeface_size_three"
         android:gravity="center_horizontal"
         android:padding="@dimen/layout_padding_one"
         android:background="@drawable/style_toast_bg"

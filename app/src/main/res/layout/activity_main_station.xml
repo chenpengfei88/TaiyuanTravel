@@ -53,7 +53,10 @@
             android:layout_height="match_parent"
             android:listSelector="@android:color/transparent"
             android:numColumns="3"
-            android:fadingEdge="@null"/>
+            android:fadingEdge="@null"
+            android:horizontalSpacing="1dp"
+            android:verticalSpacing="1dp"
+            android:background="@color/gray_color_four"/>
 
         <include layout="@layout/activity_load"
             />
