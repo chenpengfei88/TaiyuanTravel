@@ -57,8 +57,9 @@ public class StationFragment extends BaseFragment {
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
         EventBus.getDefault().unregister(this);
+        if(mPoiSearch != null) mPoiSearch.destroy();
+        super.onDestroy();
     }
 
     @Override
@@ -76,6 +77,7 @@ public class StationFragment extends BaseFragment {
         public void onGetPoiResult(PoiResult result){
             if(result == null || result.getAllPoi() == null) {
                 CustomToast.makeText(getActivity(), getString(R.string.string_station_search_error, searchStationText.getText().toString()), Toast.LENGTH_SHORT).show();
+                hideLoadView();
                 return;
             }
             //遍历所有POI，找到类型为站点的POI
@@ -123,7 +125,7 @@ public class StationFragment extends BaseFragment {
         switch (eventType.getType()){
             //点击搜索按钮
             case Const.EVENTBUS_EVENT_TYPE_SIX:
-                if(getActivity() == null) return;
+                if(getActivity() == null || !CommonUtil.isNetworkAvailable(getActivity().getApplicationContext())) return;
                 Intent intent = new Intent(getActivity(), PoiAddressActivity.class);
                 intent.putExtra("address_type", Const.MAIN_SEARCH_ADDRESS_RESULT_REQUEST_THREE);
                 startActivityForResult(intent, Const.MAIN_SEARCH_ADDRESS_RESULT_REQUEST_THREE);

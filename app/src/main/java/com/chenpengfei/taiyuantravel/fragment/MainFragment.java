@@ -10,8 +10,6 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.mapapi.model.LatLng;
@@ -19,7 +17,6 @@ import com.baidu.mapapi.search.sug.SuggestionResult;
 import com.chenpengfei.taiyuantravel.R;
 import com.chenpengfei.taiyuantravel.activity.PoiAddressActivity;
 import com.chenpengfei.taiyuantravel.activity.RouteLineActivity;
-import com.chenpengfei.taiyuantravel.customview.CustomToast;
 import com.chenpengfei.taiyuantravel.pojo.ChildSuggestionInfo;
 import com.chenpengfei.taiyuantravel.pojo.EventType;
 import com.chenpengfei.taiyuantravel.util.BaiduLocationUtil;
@@ -47,8 +44,9 @@ public class MainFragment extends Fragment {
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
         EventBus.getDefault().unregister(this);
+        BaiduLocationUtil.stopBaiDuLocation();
+        super.onDestroy();
     }
 
     @Override
@@ -66,6 +64,7 @@ public class MainFragment extends Fragment {
                     startAddress = startSuggestionInfo.key;
                 } else {
                     startAddressText.setText(getResources().getString(R.string.edit_main_start_address_location_fail));
+                    BaiduLocationUtil.stopBaiDuLocation();
                 }
             }
         }, getActivity().getApplicationContext());

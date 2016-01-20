@@ -23,6 +23,11 @@ public class BaiduLocationUtil {
         mLocationClient.requestLocation();
     }
 
+    public static void stopBaiDuLocation() {
+        if(mLocationClient != null)
+            mLocationClient.stop();
+    }
+
     private static void initLocation(){
         LocationClientOption option = new LocationClientOption();
         option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);//可选，默认高精度，设置定位模式，高精度，低功耗，仅设备

@@ -47,6 +47,12 @@ public class RouteLineActivity extends BaseActionBarActivity implements OnGetRou
         initMapSearch();
     }
 
+    @Override
+    protected void onDestroy() {
+        if(mSearch != null) mSearch.destroy();
+        super.onDestroy();
+    }
+
     private void initView() {
         startLatLng = getIntent().getParcelableExtra("start_address_lat");
         startNode = PlanNode.withLocation(startLatLng);
@@ -86,7 +92,7 @@ public class RouteLineActivity extends BaseActionBarActivity implements OnGetRou
         // 初始化搜索模块，注册事件监听
         mSearch = RoutePlanSearch.newInstance();
         mSearch.setOnGetRoutePlanResultListener(this);
-        if(CommonUtil.isNetworkAvailable(this)) {
+        if(CommonUtil.isNetworkAvailable(getApplicationContext())) {
             showLoadView(this);
             mSearch.transitSearch((new TransitRoutePlanOption()).from(startNode).city(getStringContent(R.string.search_city)).to(endNode));
         }
@@ -131,8 +137,8 @@ public class RouteLineActivity extends BaseActionBarActivity implements OnGetRou
                 stationProgrammeArrayList.add(stationProgramme);
             }
             stationProgrammeExpandableListView.setAdapter(new StationProgrammeExpandableAdapter(getLayoutInflater(), this, stationProgrammeArrayList));
-            hideLoadView();
         }
+        hideLoadView();
     }
 
     @Override

@@ -43,6 +43,12 @@ public class PoiAddressActivity extends BaseActionBarActivity {
         initView();
     }
 
+    @Override
+    protected void onDestroy() {
+        if(mSuggestionSearch != null) mSuggestionSearch.destroy();
+        super.onDestroy();
+    }
+
     private void initView() {
         //添加actionbar上的搜索地址框
         actionBarSearchView = getLayoutInflater().inflate(R.layout.activity_search_address, null);

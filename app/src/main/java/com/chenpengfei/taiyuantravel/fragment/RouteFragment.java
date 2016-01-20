@@ -59,8 +59,10 @@ public class RouteFragment extends BaseFragment implements OnGetBusLineSearchRes
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
+        if(mSearch != null) mSearch.destroy();
+        if(mBusLineSearch != null) mBusLineSearch.destroy();
         EventBus.getDefault().unregister(this);
+        super.onDestroy();
     }
 
     @Override
@@ -103,6 +105,7 @@ public class RouteFragment extends BaseFragment implements OnGetBusLineSearchRes
         switch (eventType.getType()){
             //点击搜索按钮
             case Const.EVENTBUS_EVENT_TYPE_FIVE:
+                if(!CommonUtil.isNetworkAvailable(getActivity().getApplicationContext())) return;
                 if(!TextUtils.isEmpty(eventType.getContent()))
                     searchEdit.setText(eventType.getContent());
                 String addressKeyword = searchEdit.getText().toString();
@@ -125,6 +128,7 @@ public class RouteFragment extends BaseFragment implements OnGetBusLineSearchRes
     public void onGetBusLineResult(BusLineResult busLineResult) {
         if (busLineResult == null || busLineResult.error != SearchResult.ERRORNO.NO_ERROR || getActivity() == null) {
             CustomToast.makeText(getActivity(), getResources().getString(R.string.toast_no_result), Toast.LENGTH_SHORT).show();
+            hideLoadView();
             return;
         }
         routeLineNameText.setText(busLineResult.getBusLineName());
@@ -139,6 +143,8 @@ public class RouteFragment extends BaseFragment implements OnGetBusLineSearchRes
     @Override
     public void onGetPoiResult(PoiResult result) {
         if (result == null || result.error != SearchResult.ERRORNO.NO_ERROR) {
+            CustomToast.makeText(getActivity(), getResources().getString(R.string.toast_no_result), Toast.LENGTH_SHORT).show();
+            hideLoadView();
             return;
         }
         //遍历所有POI，找到类型为公交线路的POI
@@ -151,6 +157,9 @@ public class RouteFragment extends BaseFragment implements OnGetBusLineSearchRes
         }
         if(!TextUtils.isEmpty(busLineId)) {
             mBusLineSearch.searchBusLine((new BusLineSearchOption().city(getResources().getString(R.string.search_city)).uid(busLineId)));
+        } else {
+            CustomToast.makeText(getActivity(), getResources().getString(R.string.toast_no_result), Toast.LENGTH_SHORT).show();
+            hideLoadView();
         }
     }
 

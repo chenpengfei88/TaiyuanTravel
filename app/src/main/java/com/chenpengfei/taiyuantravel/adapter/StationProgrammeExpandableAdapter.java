@@ -1,6 +1,7 @@
 package com.chenpengfei.taiyuantravel.adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,14 +69,15 @@ public class StationProgrammeExpandableAdapter extends BaseExpandableListAdapter
         if(convertView == null){
             convertView = lf.inflate(R.layout.activity_station_programme_title_item, null);
         }
-        ((TextView) convertView.findViewById(R.id.text_main_title_station_programme)).setText(((StationProgramme)getGroup(groupPosition)).getProgrammeName()); //公交线路名
+        String programme = ((StationProgramme)getGroup(groupPosition)).getProgrammeName();
+        ((TextView) convertView.findViewById(R.id.text_main_title_station_programme)).setText(!TextUtils.isEmpty(programme) ? programme : "方案" + groupPosition); //公交线路名
         int minutes = ((StationProgramme) getGroup(groupPosition)).getStationTime() / 60;
         String time = context.getResources().getString(R.string.title_station_time, minutes);
         if(minutes > 60) {
             int hour = minutes / 60;
             time = context.getResources().getString(R.string.title_station_hour_time, hour, (minutes - hour * 60));
         }
-        ((TextView) convertView.findViewById(R.id.text_main_title_station_time)).setText(time+minutes); //耗时多久
+        ((TextView) convertView.findViewById(R.id.text_main_title_station_time)).setText(time); //耗时多久
         ((TextView) convertView.findViewById(R.id.text_main_roule_line_bumber)).setText(groupPosition + 1 + "");
         return convertView;
     }
