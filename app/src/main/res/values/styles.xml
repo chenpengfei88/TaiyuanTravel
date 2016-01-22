@@ -11,6 +11,10 @@
         <item name="android:windowAnimationStyle">@style/AnimationActivity</item>
     </style>
 
+    <style name="WelcomeTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
     <style name="AppTheme" parent="@style/AppBaseTheme">
     </style>
 

@@ -33,6 +33,8 @@ import com.chenpengfei.taiyuantravel.util.Const;
 import com.chenpengfei.taiyuantravel.util.DateUtils;
 import com.ypy.eventbus.EventBus;
 
+import java.util.List;
+
 /**
  *  @copyright  陈鹏飞
  *  @author pengfei.chen
@@ -50,6 +52,7 @@ public class RouteFragment extends BaseFragment implements OnGetBusLineSearchRes
     private LinearLayout timeAndStationCountLinearLayout; //时间和车站数量布局linarlayout
     private ImageView deleteSearchImage; //清空搜索内容
     private View view;
+    private BusStationListAdapter busStationListAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -100,6 +103,13 @@ public class RouteFragment extends BaseFragment implements OnGetBusLineSearchRes
         return view;
     }
 
+    private void listNofityDataSetChanged() {
+        if(busStationListAdapter != null) {
+            busStationListAdapter.clearBusStationList();
+            busStationListAdapter.notifyDataSetChanged();
+        }
+    }
+
 
     public void onEventMainThread(EventType eventType) {
         switch (eventType.getType()){
@@ -129,6 +139,7 @@ public class RouteFragment extends BaseFragment implements OnGetBusLineSearchRes
         if (busLineResult == null || busLineResult.error != SearchResult.ERRORNO.NO_ERROR || getActivity() == null) {
             CustomToast.makeText(getActivity(), getResources().getString(R.string.toast_no_result), Toast.LENGTH_SHORT).show();
             hideLoadView();
+            listNofityDataSetChanged();
             return;
         }
         routeLineNameText.setText(busLineResult.getBusLineName());
@@ -136,7 +147,8 @@ public class RouteFragment extends BaseFragment implements OnGetBusLineSearchRes
         routeLineStartTimeText.setText(DateUtils.getDateStr(busLineResult.getStartTime(), DateUtils.DATE_PATTERN_FIVE)); //早班时间
         routeLineEndTimeAndStationCountText.setText(DateUtils.getDateStr(busLineResult.getEndTime(), DateUtils.DATE_PATTERN_FIVE) + "         共" + busLineResult.getStations().size() + getResources().getString(R.string.string_route_line_station_end)); //晚班时间
         timeAndStationCountLinearLayout.setVisibility(View.VISIBLE);
-        routeLineListView.setAdapter(new BusStationListAdapter(busLineResult.getStations(), getActivity().getLayoutInflater()));
+        busStationListAdapter = new BusStationListAdapter(busLineResult.getStations(), getActivity().getLayoutInflater());
+        routeLineListView.setAdapter(busStationListAdapter);
         hideLoadView();
     }
 
@@ -145,6 +157,7 @@ public class RouteFragment extends BaseFragment implements OnGetBusLineSearchRes
         if (result == null || result.error != SearchResult.ERRORNO.NO_ERROR) {
             CustomToast.makeText(getActivity(), getResources().getString(R.string.toast_no_result), Toast.LENGTH_SHORT).show();
             hideLoadView();
+            listNofityDataSetChanged();
             return;
         }
         //遍历所有POI，找到类型为公交线路的POI
@@ -159,6 +172,7 @@ public class RouteFragment extends BaseFragment implements OnGetBusLineSearchRes
             mBusLineSearch.searchBusLine((new BusLineSearchOption().city(getResources().getString(R.string.search_city)).uid(busLineId)));
         } else {
             CustomToast.makeText(getActivity(), getResources().getString(R.string.toast_no_result), Toast.LENGTH_SHORT).show();
+            listNofityDataSetChanged();
             hideLoadView();
         }
     }

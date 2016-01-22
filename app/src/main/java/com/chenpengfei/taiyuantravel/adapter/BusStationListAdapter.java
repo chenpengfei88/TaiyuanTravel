@@ -28,6 +28,10 @@ public class BusStationListAdapter extends BaseAdapter {
         this.context = context;
     }
 
+    public void clearBusStationList() {
+        if(busStationArrayList != null) busStationArrayList.clear();
+    }
+
     @Override
     public int getCount() {
         return busStationArrayList == null ? 0 : busStationArrayList.size();
